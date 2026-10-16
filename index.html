@@ -489,20 +489,20 @@ textarea { min-height: 120px; resize: vertical; }
             </div>
 
             <div id="magicSection" class="field full" style="display: none; margin-top: 15px;">
-                <label>Elementarmagie & Schulen (Haken setzen – max. 2 + RP-/Sonder-Magie):</label>
-                <div class="checkbox-group">
-                    <label class="checkbox-item"><input type="checkbox" value="Feuer" class="magic-check"> 🔥 Feuer</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Wasser" class="magic-check"> 💧 Wasser</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Erde" class="magic-check"> 🪨 Erde</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Luft" class="magic-check"> 🌪️ Luft</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Blitz" class="magic-check"> ⚡ Blitz</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Eis" class="magic-check"> ❄️ Eis</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Licht" class="magic-check"> ✨ Licht</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Schatten" class="magic-check"> 🌙 Schatten</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Arkan" class="magic-check"> 🔮 Arkan</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Blutmagie" class="magic-check"> 🩸 Blutmagie</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Illusionsmagie" class="magic-check"> ✨ Illusionsmagie</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Sonder-/RP-Magie" class="magic-check"> 🌟 Sonder-/RP-Magie</label>
+                <label>Elementarmagie & Schulen <span style="color:#b77aff;">(max. 2 auswählbar)</span>:</label>
+                <div class="checkbox-group" id="magicCheckboxGroup">
+                    <label class="checkbox-item"><input type="checkbox" value="Feuer" class="magic-check" onchange="limitMagicSelection(this)"> 🔥 Feuer</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Wasser" class="magic-check" onchange="limitMagicSelection(this)"> 💧 Wasser</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Erde" class="magic-check" onchange="limitMagicSelection(this)"> 🪨 Erde</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Luft" class="magic-check" onchange="limitMagicSelection(this)"> 🌪️ Luft</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Blitz" class="magic-check" onchange="limitMagicSelection(this)"> ⚡ Blitz</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Eis" class="magic-check" onchange="limitMagicSelection(this)"> ❄️ Eis</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Licht" class="magic-check" onchange="limitMagicSelection(this)"> ✨ Licht</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Schatten" class="magic-check" onchange="limitMagicSelection(this)"> 🌙 Schatten</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Arkan" class="magic-check" onchange="limitMagicSelection(this)"> 🔮 Arkan</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Blutmagie" class="magic-check" onchange="limitMagicSelection(this)"> 🩸 Blutmagie</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Illusionsmagie" class="magic-check" onchange="limitMagicSelection(this)"> ✨ Illusionsmagie</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Sonder-/RP-Magie" class="magic-check" onchange="limitMagicSelection(this)"> 🌟 Sonder-/RP-Magie</label>
                 </div>
 
                 <div class="field full" style="margin-top: 15px;">
@@ -1206,6 +1206,14 @@ function toggleMagicSection() {
         rulesBtn.style.display = "none";
         magicSec.style.display = "none";
         magicRulesAccepted = false;
+    }
+}
+
+function limitMagicSelection(checkbox) {
+    const checked = document.querySelectorAll(".magic-check:checked");
+    if (checked.length > 2) {
+        checkbox.checked = false;
+        alert("Du kannst maximal 2 Magiearten auswählen.");
     }
 }
 
