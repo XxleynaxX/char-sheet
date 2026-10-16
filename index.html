@@ -250,11 +250,6 @@ textarea {
     gap: 12px;
 }
 
-.modal-buttons-row {
-    display: flex;
-    gap: 10px;
-}
-
 .main-button {
     width: 100%;
     border: none;
@@ -469,17 +464,6 @@ textarea {
     margin-bottom: 5px;
 }
 
-.img-status-badge {
-    background: rgba(46, 125, 50, 0.2);
-    border: 1px solid #4caf50;
-    color: #81c784;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    margin-top: 10px;
-    display: inline-block;
-}
-
 .img-text-content {
     font-size: 14px;
     line-height: 1.5;
@@ -603,6 +587,18 @@ textarea {
             <div id="subraceContainer" class="field full" style="display: none; margin-top: 15px;">
                 <label>Unterart / Abstammung (zum Ankreuzen):</label>
                 <div id="subraceList" class="checkbox-group"></div>
+            </div>
+
+            <!-- BEREICH VERWANDLUNG / GESTALTWANDEL -->
+            <div class="field full" style="margin-top: 15px;">
+                <label class="checkbox-item" style="width: fit-content;">
+                    <input type="checkbox" id="hasTransform" onchange="toggleField('transformFieldContainer', this.checked)">
+                    🐾 Beherrscht Verwandlung / Gestaltwandel?
+                </label>
+                <div id="transformFieldContainer" style="display: none; margin-top: 10px;">
+                    <label style="font-size: 13px; color: #c99cff;">Details zur Verwandlung (z.B. Werwolf-Form, Tiergestalt, Voraussetzungen):</label>
+                    <textarea id="transformInput" style="min-height: 80px;" placeholder="Beschreibe in welche Gestalt sich der Charakter verwandeln kann und was dabei passiert..."></textarea>
+                </div>
             </div>
         </div>
 
@@ -748,7 +744,7 @@ textarea {
                     </select>
                 </div>
 
-                <!-- AUSSEHEN & MERKMALE NEU HINZUGEFÜGT -->
+                <!-- AUSSEHEN & MERKMALE -->
                 <div class="field full" style="background: rgba(43, 22, 69, 0.4); padding: 15px; border-radius: 10px; border: 1px solid #513477;">
                     <label style="color: #c99cff; margin-bottom: 10px; display: block;">👁️ Aussehen & äußere Merkmale</label>
                     <div class="grid" style="margin-bottom: 12px;">
@@ -770,6 +766,12 @@ textarea {
                 <div class="field full">
                     <label>Hintergrund</label>
                     <textarea id="background" placeholder="Woher kommt dein Charakter?"></textarea>
+                </div>
+
+                <!-- NEUES FELD: ZIELE UND VORHABEN -->
+                <div class="field full">
+                    <label>🎯 Ziele & was ich vorhabe</label>
+                    <textarea id="goalsInput" placeholder="Welche Ziele verfolgt dein Charakter im RP? Was hast du für dein Spiel geplantes Vorhaben?"></textarea>
                 </div>
 
                 <div class="field full">
@@ -873,17 +875,14 @@ textarea {
 <!-- MODAL FÜR MAGIEREGELN -->
 <div id="magicRulesModal" class="modal-overlay">
     <div class="modal-content">
-        <div class="modal-header">📜 Magieregeln für unseren Conan Exiles Server</div>
+        <div class="modal-header">📜 Magieregeln für unseren Server</div>
         <div class="modal-body">
             <p>Um die Balance im Spiel zu erhalten und das Rollenspiel zu bereichern, gelten für die Nutzung von Magie die folgenden Regeln:</p>
-            <p><strong>Magieregeln:</strong></p>
             <ul>
-                <li><strong>1. Beschränkung der Magiearten pro Charakter:</strong> Jeder Charakter darf maximal zwei Magiearten beherrschen. Zusätzlich kann eine reine RP-Magie gewählt werden, die rein dem Rollenspiel dient. Bitte achte darauf, keine gegensätzlichen Magien zu wählen.</li>
-                <li><strong>2. Beispiel:</strong> Wasser- und Feuermagie sind gegensätzlich und können nicht kombiniert werden.</li>
-                <li><strong>3. Konsensbasierte Magienutzung:</strong> Die Wirkung von Magie erfordert stets den Konsens aller Beteiligten. Magie muss immer aus einer Quelle bezogen werden.</li>
-                <li><strong>4. Malus und Nebenwirkungen:</strong> Jede Magienutzung hat ihren Preis (Kosten, Mangelerscheinungen, Brandnarben, Kopfschmerzen etc.).</li>
-                <li><strong>5. Kein gottgleiches Verhalten:</strong> Magie darf nicht als allmächtig oder unbesiegbar dargestellt werden.</li>
-                <li><strong>6. Passen der Magiefertigkeiten zum Charakter:</strong> Sollte glaubwürdig zur Hintergrundgeschichte passen.</li>
+                <li><strong>1. Beschränkung der Magiearten:</strong> Maximal zwei Magiearten plus reine RP-Magie.</li>
+                <li><strong>2. Keine Gegenpole:</strong> Gegensätzliche Magien (z. B. Feuer und Wasser) können nicht kombiniert werden.</li>
+                <li><strong>3. Konsensbasis:</strong> Die Anwendung erfordert den Konsens der Beteiligten und eine passende Quelle.</li>
+                <li><strong>4. Nebenwirkungen:</strong> Jede Magie fordert einen spürbaren Preis (Schmerzen, Narben etc.).</li>
             </ul>
             <div style="margin-top: 25px; background: #241733; padding: 15px; border-radius: 10px; border: 1px solid #513477;">
                 <div class="field" style="margin-bottom: 12px;">
@@ -904,1052 +903,392 @@ textarea {
     </div>
 </div>
 
-<!-- MODAL FÜR GRÖSSEN-SICHERHEITSABFRAGE -->
-<div id="sizeConfirmModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">⚠️ Sind Sie sicher mit der Größe?</div>
-        <div class="modal-body">
-            <p>Deine eingetragene Größe weicht von der typischen Rassen-Vorgabe ab oder liegt außerhalb des üblichen Bereichs für dieses Geschlecht.</p>
-            <p id="sizeComparisonText" style="color: #c99cff; font-weight: bold;"></p>
-            
-            <div style="margin-top: 20px; background: #241733; padding: 15px; border-radius: 10px; border: 1px solid #513477;">
-                <div class="field" style="margin-bottom: 12px;">
-                    <label>Dein Username zur Bestätigung:</label>
-                    <input type="text" id="sizeModalUsername" placeholder="Gib hier deinen Namen ein...">
-                </div>
-                <div class="field">
-                    <label class="checkbox-item" style="width: 100%;">
-                        <input type="checkbox" id="sizeModalCheck">
-                        Ich bin mit dieser abweichenden Größe einverstanden und bestätige meine Angabe.
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="modal-buttons-row">
-                <button type="button" class="secondary-button" onclick="closeSizeModalToEdit()">Größe überarbeiten</button>
-                <button type="button" class="main-button" onclick="confirmSizeAndProceed()">Einverstanden & Speichern</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL FÜR FESSELN & SKLAVEREI EINWILLIGUNG -->
-<div id="consentModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">🔒 OOC-Sicherheitsabfrage: Fesseln & Versklavung</div>
-        <div class="modal-body">
-            <p>Auf unserem Server können RP-Situationen wie Gefangennahme, Fesseln oder Versklavung vorkommen. Zum Schutz und Einverständnis aller Spieler ist hierfür eine OOC-Bestätigung erforderlich.</p>
-            <p style="color: #c99cff;">Mit dieser Zustimmung erklärst du dich als Spieler damit einverstanden, dass dein Charakter in solche RP-Handlungen verwickelt werden darf.</p>
-            
-            <div style="margin-top: 20px; background: #241733; padding: 15px; border-radius: 10px; border: 1px solid #513477;">
-                <div class="field" style="margin-bottom: 12px;">
-                    <label>Dein Username (Ingame / Discord):</label>
-                    <input type="text" id="consentModalUsername" placeholder="Gib hier deinen Namen ein...">
-                </div>
-                <div class="field">
-                    <label class="checkbox-item" style="width: 100%;">
-                        <input type="checkbox" id="consentModalCheck">
-                        Ich stimme Fesseln & Versklavung für mein RP ausdrücklich zu.
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="modal-buttons-row">
-                <button type="button" class="secondary-button" onclick="cancelConsentModal()">Abbrechen</button>
-                <button type="button" class="main-button" onclick="confirmConsentModal()">Einverstanden & Speichern</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- VERSTECKTE BILDVORLAGE -->
+<!-- VERSTECKTE VORLAGE FÜR BILD-EXPORT -->
 <div class="hidden-card">
-    <div id="characterCard" class="character-image">
-        
+    <div id="exportCard" class="character-image">
         <div class="img-header-title">
-            <h1 id="imgName">Chroniken Charakter</h1>
-            <p>— Charakterbogen —</p>
+            <h1 id="imgName">Charaktername</h1>
+            <p id="imgRaceSub">Rasse & Unterart</p>
         </div>
 
         <div class="img-grid-layout">
-            
-            <!-- BOX: ALLGEMEINE DATEN -->
             <div class="img-box">
                 <div class="img-box-title">👤 Allgemeine Daten</div>
-                <div class="img-field-row">
-                    <span class="img-field-label">Alter:</span>
-                    <span id="imgAge">-</span>
-                </div>
-                <div class="img-field-row">
-                    <span class="img-field-label">Geschlecht:</span>
-                    <span id="imgGender">-</span>
-                </div>
-                <div class="img-field-row">
-                    <span class="img-field-label">Größe:</span>
-                    <span id="imgSize">-</span>
-                </div>
-                <div id="imgSizeStatus" class="img-status-badge" style="display:none;"></div>
+                <div class="img-field-row"><span class="img-field-label">Alter:</span> <span id="imgAge">-</span></div>
+                <div class="img-field-row"><span class="img-field-label">Geschlecht:</span> <span id="imgGender">-</span></div>
+                <div class="img-field-row"><span class="img-field-label">Größe:</span> <span id="imgSize">-</span></div>
+                <div class="img-field-row"><span class="img-field-label">Gesinnung:</span> <span id="imgAlignment">-</span></div>
             </div>
 
-            <!-- BOX: VOLK & ABSTAMMUNG -->
             <div class="img-box">
-                <div class="img-box-title">🧬 Volk & Abstammung</div>
-                <div class="img-field-row">
-                    <span class="img-field-label">Rasse:</span>
-                    <span id="imgRace">-</span>
-                </div>
-                <div style="margin-top: 10px;">
-                    <span class="img-field-label">Unterart:</span>
-                    <div id="imgSubracesList" style="margin-top: 5px;"></div>
-                </div>
+                <div class="img-box-title">🛠️ Berufe & Arbeit</div>
+                <div class="img-field-row"><span class="img-field-label">Hauptberuf:</span> <span id="imgMainJob">-</span></div>
+                <div class="img-field-row"><span class="img-field-label">Nebenberuf:</span> <span id="imgSubJob">Keiner</span></div>
             </div>
 
-            <!-- BOX: MAGIEBEGABUNG -->
-            <div id="imgMagicSection" class="img-box full-width" style="display:none;">
-                <div class="img-box-title">✨ Magiebegabung & Server-Regeln</div>
-                <div>
-                    <span class="img-field-label">Schulen:</span>
-                    <div id="imgMagicBadges" style="margin-top: 5px; display: flex; flex-wrap: wrap;"></div>
-                </div>
-                <div id="imgMagicDetailsBox" style="margin-top: 10px; display:none;">
-                    <span class="img-field-label">Stärken, Quellen & Nebenwirkungen:</span>
-                    <p id="imgMagicDetailsText" class="img-text-content" style="margin-top: 4px;"></p>
-                </div>
-                <div id="imgMagicRulesStatus" class="img-status-badge"></div>
+            <div class="img-box full-width" id="imgTransformBox" style="display:none;">
+                <div class="img-box-title">🐾 Verwandlung & Gestaltwandel</div>
+                <div class="img-text-content" id="imgTransformDetails">-</div>
             </div>
 
-            <!-- BOX: ANHÄNGSEL & ACCESSOIRES -->
-            <div id="imgAttachmentsSection" class="img-box full-width" style="display:none;">
-                <div class="img-box-title">💎 Anhängsel & Accessoires</div>
-                <div id="imgAttachmentsBadges" style="display: flex; flex-wrap: wrap;"></div>
-            </div>
-
-            <!-- BOX: BERUFE -->
             <div class="img-box full-width">
-                <div class="img-box-title">🛠️ Berufe & Handwerk</div>
-                <div class="img-field-row">
-                    <span class="img-field-label">Hauptberuf:</span>
-                    <span id="imgMainJob">-</span>
-                </div>
-                <div class="img-field-row" style="margin-bottom:0;">
-                    <span class="img-field-label">Nebenberuf:</span>
-                    <span id="imgSubJob">-</span>
-                </div>
-            </div>
-
-            <!-- BOX: GESINNUNG & MORAL -->
-            <div class="img-box full-width">
-                <div class="img-box-title">⚖️ Moral & Gesinnung</div>
-                <div class="img-field-row" style="margin-bottom: 0;">
-                    <span class="img-field-label">Gesinnung:</span>
-                    <span id="imgAlignment" style="color: #c99cff; font-weight: bold;">-</span>
-                </div>
-            </div>
-
-            <!-- BOX: AUSSEHEN AUF DEM BILD -->
-            <div id="imgAppearanceBox" class="img-box full-width" style="display: none;">
                 <div class="img-box-title">👁️ Aussehen & Merkmale</div>
-                <div class="img-field-row">
-                    <span class="img-field-label">Haare:</span>
-                    <span id="imgHair">-</span>
-                </div>
-                <div class="img-field-row">
-                    <span class="img-field-label">Augen:</span>
-                    <span id="imgEyes">-</span>
-                </div>
-                <div style="margin-top: 8px;">
-                    <span class="img-field-label">Beschreibung:</span>
-                    <p id="imgAppearanceText" class="img-text-content" style="margin-top: 4px;">-</p>
-                </div>
+                <div class="img-field-row"><span class="img-field-label">Haare & Augen:</span> <span id="imgHairEyes">-</span></div>
+                <div class="img-text-content" id="imgAppearance">-</div>
             </div>
 
-            <!-- BOX: HINTERGRUND -->
+            <div class="img-box full-width" id="imgMagicBox" style="display:none;">
+                <div class="img-box-title">✨ Magie & Fähigkeiten</div>
+                <div id="imgMagicElements" style="margin-bottom: 8px;"></div>
+                <div class="img-text-content" id="imgMagicDetails">-</div>
+            </div>
+
+            <div class="img-box full-width" id="imgAccessoriesBox" style="display:none;">
+                <div class="img-box-title">🏷️ Anhängsel & Accessoires</div>
+                <div id="imgAccessoriesList"></div>
+            </div>
+
             <div class="img-box full-width">
-                <div class="img-box-title">📖 Hintergrundgeschichte</div>
-                <div id="imgBackground" class="img-text-content">-</div>
+                <div class="img-box-title">📜 Hintergrund, Ziele & Eigenschaften</div>
+                <div class="img-text-content" style="margin-bottom: 8px;"><strong style="color:#a782d9;">Hintergrund:</strong><br><span id="imgBackground">-</span></div>
+                <div class="img-text-content" style="margin-bottom: 8px;"><strong style="color:#a782d9;">Ziele & Vorhaben:</strong><br><span id="imgGoals">-</span></div>
+                <div class="img-text-content"><strong style="color:#a782d9;">Eigenschaften / Fertigkeiten:</strong><br><span id="imgTraits">-</span></div>
             </div>
-
-            <!-- BOX: FÄHIGKEITEN -->
-            <div class="img-box">
-                <div class="img-box-title">⚔️ Fähigkeiten</div>
-                <div id="imgAbilities" class="img-text-content">-</div>
-            </div>
-
-            <!-- BOX: CHARAKTEREIGENSCHAFTEN -->
-            <div class="img-box">
-                <div class="img-box-title">🎭 Eigenschaften</div>
-                <div id="imgTraits" class="img-text-content">-</div>
-            </div>
-
-            <!-- BOX: OOC SICHERHEITSINFOS -->
-            <div id="imgOocBox" class="img-box full-width" style="display: none;">
-                <div class="img-box-title">🔒 OOC-Sicherheitsinfos</div>
-                <div id="imgConsentWrapper" style="margin-bottom: 8px; display: none;">
-                    <span class="img-status-badge">✓ Fesseln/Versklavung akzeptiert von: <span id="imgConsentUser"></span></span>
-                </div>
-                <div id="imgPhobiasWrapper" style="display: none;">
-                    <span class="img-field-label" style="display: block; margin-bottom: 2px;">OOC-Phobien / Grenzen:</span>
-                    <p id="imgPhobiasText" class="img-text-content">-</p>
-                </div>
-            </div>
-
         </div>
 
         <div class="watermark-copyright">
-            <span>Chroniken • Digitaler Charakterbogen</span>
-            <span>© Leyna Hartmann</span>
+            <span>Chroniken Charakterbogen</span>
+            <span id="imgDate">Datum</span>
         </div>
-
     </div>
 </div>
 
 <script>
-/* DATEN FÜR VÖLKER UND UNTERARTEN MIT VOLLSTÄNDIGEN BESCHREIBUNGEN & GRÖSSEN */
-const races = {
-    Mensch: {
-        title: "🧑 Mensch",
-        value: "Mensch",
-        subraces: ["Königreichsmensch", "Freier Mensch", "Küstenmensch", "Steppenmensch", "Nordmensch", "Wüstenmensch", "Magiermensch", "Blutgebundener Mensch", "Naturmensch", "Kriegerkult-Mensch"],
-        size: "M: 155-195 cm | F: 150-185 cm",
-        minM: 1.55, maxM: 1.95, minF: 1.50, maxF: 1.85,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Wandelbarstes Volk mit hoher Anpassungsfähigkeit und schnellem Lernen. Lebensspanne: 60-100 Jahre.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Hohe Anpassungsfähigkeit, schnelles Lernen, große emotionale Bandbreite, starker Überlebensinstinkt.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Keine angeborene Spezialisierung von Natur aus.</p></div>`
-    },
-    Elf: {
-        title: "🧝 Elf",
-        value: "Elf",
-        subraces: ["Waldelf", "Hochelf", "Dunkelelf", "Eiself", "Seeelf", "Mondelf", "Sonnenelf"],
-        size: "M: 150-210 cm | F: 150-195 cm",
-        minM: 1.50, maxM: 2.10, minF: 1.50, maxF: 1.95,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Alte Völker, eng mit Magie und Natur verbunden. Lebensspanne: 300-900 Jahre.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Hohe Magieaffinität, erhöhte Beweglichkeit/Reaktion, Resistenz gegen Krankheiten, starke geistige Disziplin.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Oft Arroganz, langsame Anpassung an urbane Chaos-Zustände.</p></div>`
-    },
-    Zwerg: {
-        title: "⛏️ Zwerg",
-        value: "Zwerg",
-        subraces: ["Bergzwerg", "Feuerzwerg", "Frostzwerg", "Tiefenzwerg", "Küstenzwerg", "Blutgeschworener Zwerg"],
-        size: "M: 120-155 cm | F: 115-150 cm",
-        minM: 1.20, maxM: 1.55, minF: 1.15, maxF: 1.50,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Kinder von Stein, Erz und Feuer. Robust, Giftresistenz. Lebensspanne: 250-500 Jahre.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Hohe physische Widerstandskraft, Affinität zu Metall/Stein, Zähigkeit gegen Gifte/Krankheiten, Handwerkskunst.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Starrheit bei Traditionen, oft misstrauisch gegenüber Neuem.</p></div>`
-    },
-    Orc: {
-        title: "👹 Orc",
-        value: "Orc",
-        subraces: ["Kriegsorc", "Steppenorc", "Bergorc", "Grünorc", "Blutorc"],
-        size: "M: 180-230 cm | F: 170-215 cm",
-        minM: 1.80, maxM: 2.30, minF: 1.70, maxF: 2.15,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Kriegerische Urvölker mit starkem Überlebensinstinkt. Lebensspanne: 60-90 Jahre.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Hohe körperliche Stärke, natürliche Schmerztoleranz, starke Willenskraft.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Schnelle Alterung, oft Vorurteile durch kriegerische Kultur.</p></div>`
-    },
-    Kitsune: {
-        title: "🦊 Kitsune",
-        value: "Kitsune",
-        subraces: ["Weiße Kitsune", "Schwarze Kitsune"],
-        size: "Variabel (menschlich / tierisch)",
-        minM: 1.40, maxM: 2.00, minF: 1.40, maxF: 1.90,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Mystisches Fuchsvolk / Yōkai mit Verbindung zu Illusionen, Gestaltwandel und Fuchsfeuer.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Illusionen, Gestaltwandel, Fuchsfeuer, Naturverbundenheit.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Eisen/magische Siegel behindern Verwandlung, Stolz.</p></div>`
-    },
-    Wolf: {
-        title: "🐺 Wolf",
-        value: "Wolf",
-        subraces: ["Silberwolf", "Schwarzwolf", "Weißer Geistwolf", "Dämonischer Wolf"],
-        size: "M: 200-250 cm | F: 160-220 cm",
-        minM: 2.00, maxM: 2.50, minF: 1.60, maxF: 2.20,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Uralte Geschöpfe, verbunden mit dem Mond und Geistern. Lebensspanne bis 1200 Jahre.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Erhöhte Sinne, Schattenschritt, Mondbindung.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Empfindlich gegenüber Silber, Blutmond kann Instinkte stören.</p></div>`
-    },
-    Troll: {
-        title: "🧌 Troll",
-        value: "Troll",
-        subraces: ["Waldtroll", "Bergtroll"],
-        size: "200 - 250 cm",
-        minM: 2.00, maxM: 2.50, minF: 2.00, maxF: 2.50,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 80-250 Jahre. Robuste Natur und außergewöhnliche Regeneration.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Regenerationsmagie, Erdmagie, physische Stärke.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Grobe Art führt oft zu Missverständnissen.</p></div>`
-    },
-    Tiefling: {
-        title: "😈 Tiefling",
-        value: "Tiefling",
-        subraces: ["Feuertiefling", "Schattentiefling"],
-        size: "150 - 220 cm",
-        minM: 1.50, maxM: 2.20, minF: 1.50, maxF: 2.10,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 70-1000 Jahre. Stark auf Elementar- und Illusionsmagie fokussiert.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Feuermagie, Illusionsmagie, feurige Wandelform.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Misstrauen anderer Rassen.</p></div>`
-    },
-    Gnom: {
-        title: "🛠️ Gnom",
-        value: "Gnom",
-        subraces: ["Felsgnom", "Waldgnom"],
-        size: "M: 80-160 cm | F: 90-120 cm",
-        minM: 0.80, maxM: 1.60, minF: 0.90, maxF: 1.40,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 100-150 Jahre. Enge Verbindung zu Natur, Handwerk und Magie.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Illusionsmagie, Mechanomagie, Erfindungsreichtum.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Exzentrische Art.</p></div>`
-    },
-    Halbling: {
-        title: "🌾 Halbling",
-        value: "Halbling",
-        subraces: ["Leichtfuss", "Starkherz"],
-        size: "M: 80-160 cm | F: 90-120 cm",
-        minM: 0.80, maxM: 1.60, minF: 0.90, maxF: 1.40,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 100-150 Jahre. Friedliche Lebensweise, Gastfreundschaft.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Heilmagie, Naturmagie, Gemeinschaftsgefühl.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Werden oft unterschätzt.</p></div>`
-    },
-    Minotaurus: {
-        title: "🐂 Minotaurus",
-        value: "Minotaurus",
-        subraces: ["Bergminotaurus", "Labyrinthminotaurus"],
-        size: "M: 210-280 cm | F: 180-260 cm",
-        minM: 2.10, maxM: 2.80, minF: 1.80, maxF: 2.60,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 100-200 Jahre. Robuste Konstitution.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Erdmagie, Kraftmagie, Schutzmagie.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Imposante Präsenz.</p></div>`
-    },
-    Drachengeborener: {
-        title: "🐉 Drachengeborener",
-        value: "Drachengeborener",
-        subraces: ["Rotdrachen-Blut", "Eisdrachen-Blut", "Blitzdrachen-Blut"],
-        size: "M: 110-270 cm | F: 170-220 cm",
-        minM: 1.50, maxM: 2.70, minF: 1.50, maxF: 2.20,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 150-300 Jahre. Drakonische Abstammung.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Feuermagie, Drachenatem, Sturm-/Blitzmagie.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Enorme Kraft kann zu Spannungen führen.</p></div>`
-    },
-    Dämon: {
-        title: "🔥 Dämon",
-        value: "Dämon",
-        subraces: ["Flammendämon", "Seelendämon", "Schattenfeind"],
-        size: "M: 110-270 cm | F: 110-240 cm",
-        minM: 1.50, maxM: 2.70, minF: 1.50, maxF: 2.40,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 200-1500 Jahre. Starke Regeneration.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Flammenmagie, Seelenmagie, Blutmagie.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Misstrauen anderer Rassen.</p></div>`
-    },
-    Fee: {
-        title: "🧚 Fee",
-        value: "Fee",
-        subraces: ["Lichtfee", "Waldfee", "Schattenfee"],
-        size: "M: 80-150 cm | F: 80-140 cm",
-        minM: 0.80, maxM: 1.50, minF: 0.80, maxF: 1.40,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 70-120 Jahre. Magische Verbindung zur Natur.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Naturmagie, Illusionsmagie, Größenveränderung.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Unzuverlässig.</p></div>`
-    },
-    Halbgigant: {
-        title: "🏔️ Halbgigant",
-        value: "Halbgigant",
-        subraces: ["Stein-Halbgigant", "Frost-Halbgigant"],
-        size: "M: 200-270 cm | F: 200-250 cm",
-        minM: 2.00, maxM: 2.70, minF: 2.00, maxF: 2.50,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 100-150 Jahre. Robuste Natur.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Erdenmagie, Kraftmagie, Schutzmagie.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Territoriale Natur.</p></div>`
-    },
-    Goblin: {
-        title: "👺 Goblin",
-        value: "Goblin",
-        subraces: ["Höhlengoblin", "Waldgoblin"],
-        size: "M: 50-160 cm | F: 50-130 cm",
-        minM: 0.50, maxM: 1.60, minF: 0.50, maxF: 1.30,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 40-70 Jahre. Risikobehaftete Lebensweise.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Illusionsmagie, Alchemie, Erdmagie.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Verschlagenheit.</p></div>`
-    },
-    Wasserwesen: {
-        title: "🌊 Wasserwesen",
-        value: "Wasserwesen",
-        subraces: ["Meereswesen", "Flusswesen"],
-        size: "M: 80-220 cm | F: 110-200 cm",
-        minM: 0.80, maxM: 2.20, minF: 1.10, maxF: 2.00,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 70-120 Jahre. Natürliche Umgebung im nassen Element.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Wassermagie, Eismagie, Heilmagie.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Spezielle Anforderungen.</p></div>`
-    },
-    Vogelwesen: {
-        title: "🦅 Vogelwesen",
-        value: "Vogelwesen",
-        subraces: ["Falkenwesen", "Eulenwesen", "Greifenblut"],
-        size: "M: 110-230 cm | F: 110-190 cm",
-        minM: 1.10, maxM: 2.30, minF: 1.10, maxF: 1.90,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 60-100 Jahre. Verbindung zum Himmel.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Luftmagie, Lichtmagie, Flugverwandlung.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Spezielle Lebensweise.</p></div>`
-    },
-    Tierwesen: {
-        title: "🐾 Tierwesen",
-        value: "Tierwesen",
-        subraces: ["Katzenwesen", "Bärenwesen", "Hirschwesen"],
-        size: "M: 110-240 cm | F: 80-200 cm",
-        minM: 1.10, maxM: 2.40, minF: 0.80, maxF: 2.00,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 60-120 Jahre. Enge Bindung an Instinkte.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Naturmagie, Tiermagie, geschärfte Sinne.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Instinktives Verhalten.</p></div>`
-    },
-    Halborc: {
-        title: "🛡️ Halborc",
-        value: "Halborc",
-        subraces: ["Stadt-Halborc", "Stamm-Halborc"],
-        size: "M: 160-220 cm | F: 160-210 cm",
-        minM: 1.60, maxM: 2.20, minF: 1.60, maxF: 2.10,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 50-80 Jahre. Verbindung von orkscher Kraft und menschlicher Flexibilität.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Blutmagie, Pragmatismus, Anpassungsfähigkeit.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Vorurteile.</p></div>`
-    },
-    Halbelf: {
-        title: "🏹 Halbelf",
-        value: "Halbelf",
-        subraces: ["Wald-Halbelf", "Stadt-Halbelf"],
-        size: "M: 150-210 cm | F: 150-195 cm",
-        minM: 1.50, maxM: 2.10, minF: 1.50, maxF: 1.95,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 200-300 Jahre. Brückenbauer zwischen Menschen und Elfen.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Vielseitige Magie, diplomatisches Geschick.</p></div>
-            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Fühlen sich oft als Außenseiter.</p></div>`
-    },
-    Wargwandler: {
-        title: "🐺 Wargwandler",
-        value: "Wargwandler",
-        subraces: ["Nord-Raubtier", "Süd-Raubtier", "Grenzgänger"],
-        size: "200 - 240 cm (humanoid)",
-        minM: 2.00, maxM: 2.40, minF: 1.80, maxF: 2.20,
-        content: `
-            <div class="detail-box"><strong>Allgemeines</strong><p>Lebenserwartung: 500-5000 Jahre. Tiergeborene Gestaltwandler.</p></div>
-            <div class="detail-box"><strong>💪 Stärken</strong><p>Gestaltwandlung, animalische Sinne, Selbstheilung.</p></div>
-            <div class="detail-box"><b>⚠️ Schwächen</b><p><b>Keine Magieaffinität</b> (Magie stürzt sie in Raserei).</p></div>`
-    }
+// Daten-Definitionen für Rassen, Berufe, Magie etc.
+const racesData = {
+    "Mensch": { desc: "Vielseitig, anpassungsfähig und in allen Regionen vertreten.", sub: ["Stadtwache", "Nomade", "Adliger", "Gelehrter"], strength: "Hohe Flexibilität", weakness: "Keine besonderen angeborenen Resistenzen" },
+    "Elf": { desc: "Anmutig, langlebig und tief mit der Natur oder arkanen Künsten verbunden.", sub: ["Waldelf", "Hochelf", "Dunklelf"], strength: "Hohe Agilität & Magiebegabung", weakness: "Anfällig für schwere körperliche Waffengewalt" },
+    "Zwerg": { desc: "Stämmig, arbeitsam und meisterhafte Handwerke oder Krieger.", sub: ["Hügellandzwerg", "Tiefzwerg", "Schildzwerg"], strength: "Enormer Widerstand & Kraft", weakness: "Geringe Körpergröße / Beweglichkeit" },
+    "Orc": { desc: "Kraftvoll, stolz und traditionsbewusst.", sub: ["Blutorc", "Steppenorc", "Eisenkamm-Orc"], strength: "Rohe körperliche Stärke", weakness: "Voreingenommenheit / Jähzorn" },
+    "Kitsune": { desc: "Fuchswesen mit schlauer Natur und oft magischen Verbindungen.", sub: ["Feuerfuchs", "Geisterfuchs", "Waldkitsune"], strength: "Wendig & Täuschend", weakness: "Stolz" },
+    "Wolf": { desc: "Starke Verbundenheit zu Rudelstrukturen und Wildnis.", sub: ["Schneewolf", "Schattenwolf", "Grauwolf"], strength: "Scharfe Sinne", weakness: "Misstrauen gegenüber Fremden" },
+    "Troll": { desc: "Gigantische Gestalten mit enormer Zähigkeit.", sub: ["Höhlentroll", "Brückentroll", "Sumpftroll"], strength: "Regeneration", weakness: "Feueranfälligkeit" },
+    "Tiefling": { desc: "Gezeichnet von infernalischem Erbe mit markanten Hörnern oder Schwänzen.", sub: ["Feuertiefling", "Schattenabstammung"], strength: "Resistenz gegen Hitze/Schatten", weakness: "Misstrauen der Bevölkerung" },
+    "Gnom": { desc: "Kleine Tüftler und Erfinder.", sub: ["Felsgnom", "Tüftlergnom"], strength: "Technisches Geschick", weakness: "Körperliche Unterlegenheit" },
+    "Halbling": { desc: "Klein, flink und schwer zu fangen.", sub: ["Leichtfuss", "Starkherz"], strength: "Glück im Unglück", weakness: "Geringe Reichweite" },
+    "Minotaurus": { desc: "Halbmensch, halb Stier mit unbändiger Wucht.", sub: ["Labyrinth-Minotaurus", "Steppenstier"], strength: "Wuchtiger Ansturm", weakness: "Schnelle Reizbarkeit" },
+    "Drachengeborener": { desc: "Schuppige Nachfahren mächtiger Drachen.", sub: ["Feuerschuppe", "Eisschuppe"], strength: "Drachenodem", weakness: "Arroganz" },
+    "Dämon": { desc: "Wesen aus dunklen Sphären.", sub: ["Niederer Dämon", "Schattenfürst"], strength: "Furchteinflößend", weakness: "Heilige Magie" },
+    "Fee": { desc: "Kleine, geflügelte Waldwesen.", sub: ["Lichtfee", "Nachtfee"], strength: "Flugfähigkeit & Illusion", weakness: "Körperlich sehr zerbrechlich" },
+    "Halbgigant": { desc: "Hünenhafte Riesen mit enormer Kraft.", sub: ["Bergriesenblut", "Frostriesenblut"], strength: "Gigantische Kraft", weakness: "Langsamkeit" },
+    "Goblin": { desc: "Klein, listig und geschickt in finsteren Ecken.", sub: ["Höhlengoblin", "Klingenknacker"], strength: "Schnelligkeit", weakness: "Geringer Respekt" },
+    "Wasserwesen": { desc: "Zu Hause in Seen, Flüssen und Meeren.", sub: ["Flusspionier", "Meeresblut"], strength: "Unterwasseratmung", weakness: "Trockenheit" },
+    "Vogelwesen": { desc: "Geflügelte Jäger der Lüfte.", sub: ["Greifvogel", "Rabengeist"], strength: "Flug & Weitblick", weakness: "Hohle Knochen (Verletzlichkeit)" },
+    "Tierwesen": { desc: "Mischwesen aus Mensch und Tier.", sub: ["Raubtierblut", "Beuteltierblut"], strength: "Spezifische Tierinstinkte", weakness: "Tierische Triebe" },
+    "Halborc": { desc: "Mischling aus Mensch und Orc.", sub: ["Kriegerblut", "Grenzland-Halborc"], strength: "Zäh & stark", weakness: "Zerrissenheit" },
+    "Halbelf": { desc: "Vereint die Eleganz der Elfen mit der Pragmatik der Menschen.", sub: ["Stadt-Halbelf", "Wildnis-Halbelf"], strength: "Diplomatisch begabt", weakness: "Nirgends ganz daheim" },
+    "Wargwandler": { desc: "Kann sich in wolfsähnliche Kreaturen verwandeln.", sub: ["Schattenwarg", "Blutwarg"], strength: "Gestaltwandel", weakness: "Vollmond-Unruhe" }
 };
 
-const magicSchools = {
-    feuer: { title: "🔥 Feuermagie", source: "Offenes Feuer", strengths: "Zerstörung, Hitze", weaknesses: "Brandnarben" },
-    wasser: { title: "💧 Wassermagie", source: "Gewässer, Regen", strengths: "Flexibilität, Heilung", weaknesses: "Unterkühlung" },
-    erde: { title: "🪨 Erdmagie", source: "Boden, Stein", strengths: "Defensive, Steinbarrieren", weaknesses: "Versteinerung der Haut" },
-    luft: { title: "🌪️ Luftmagie", source: "Freier Wind", strengths: "Beweglichkeit, Windstöße", weaknesses: "Kurzatmigkeiten" },
-    blitz: { title: "⚡ Blitzmagie", source: "Stürme, Hitze", strengths: "Geschwindigkeit, Schock", weaknesses: "Muskelzucken" },
-    eis: { title: "❄️ Eismagie", source: "Frost, Kälte", strengths: "Einfrieren, Eisrüstungen", weaknesses: "Kältebrand" },
-    licht: { title: "✨ Lichtmagie", source: "Sonnenlicht", strengths: "Blenden, Segnung", weaknesses: "Augenschmerzen" },
-    schatten: { title: "🌙 Schatten / Arkan", source: "Dunkelheit", strengths: "Tarnung, Illusionen", weaknesses: "Lichtempfindlichkeit" },
-    blut: { title: "🩸 Blutmagie", source: "Frischblut", strengths: "Körperverstärkung", weaknesses: "Eigenblutverlust" },
-    illusion: { title: "🔮 Illusionsmagie", source: "Geistige Energie", strengths: "Trugbilder", weaknesses: "Migräne" }
+const jobsData = {
+    "Tierpfleger": { subtitle: "Meister der Kreaturen", desc: "Kümmert sich um Zähmung, Pflege und Aufzucht von Tieren aller Art auf dem Server." },
+    "Feinschmied": { subtitle: "Künstler des Metalls", desc: "Fertigt filigrane Schmuckstücke, Beschläge und kunstvolle Metallwaren an." },
+    "Bogner": { subtitle: "Schütze der Sehnen", desc: "Spezialisiert auf den Bau von Bögen, Armbrüsten und präziser Munition." },
+    "Alchemist": { subtitle: "Brauer der Essenzen", desc: "Erstellt Tränke, Gifte, Heilmittel und magische Reagenzien." },
+    "Schmelzer": { subtitle: "Hüter des Feuers", desc: "Gewinnt aus Roherzen reine Metalle und bereitet sie für Schmiede vor." },
+    "Waffenschmied": { subtitle: "Schmied des Krieges", desc: "Schmiedet scharfe Klingen, schwere Äxte und verlässliche Nahkampfwaffen." },
+    "Rüstungsschmied": { subtitle: "Bauer des Schutzes", desc: "Stellt Plattenrüstungen, Kettenhemden und Schilde zum Schutz im Kampf her." },
+    "Mönch und Priester": { subtitle: "Diener des Glaubens", desc: "Führt spirituelle Handlungen, Segnungen und Tempeldienste aus." },
+    "Heiler": { subtitle: "Retter in Not", desc: "Versorgt Wunden, lindert Krankheiten und hilft Verletzten zurück ins Leben." },
+    "Schneider": { subtitle: "Künstler der Fäden", desc: "Stellt Kleidung, Stoffrüstungen, Umhänge und Taschen her (Nebenberuf)." },
+    "Koch und Wirt": { subtitle: "Bewahrer des Gaumens", desc: "Versorgt die Gemeinschaft mit nahrhaften Speisen und Getränken (Nebenberuf)." },
+    "Sucher nach Arbeitern": { subtitle: "Vermittler der Hände", desc: "Koordiniert Aufträge, Arbeitskräfte und Handwerkerprojekte (Nebenberuf)." },
+    "Landwirt": { subtitle: "Hüter der Felder", desc: "Baut Nutzpflanzen an und versorgt die Wirtschaft mit Rohstoffen (Nebenberuf)." }
 };
 
-const jobs = {
-    tierpfleger: { title: "🐾 Der Tierpfleger", subtitle: "Der Flüsterer der Bestien", category: "Hauptberuf", desc: "Versteht das Verhalten wilder und gezähmter Tiere." },
-    schneider: { title: "🧵 Der Schneider", subtitle: "Formgeber der Identität", category: "Nebenberuf", desc: "Arbeitet mit Stoffen, Mustern und feinen Textilien." },
-    kochwirt: { title: "🍲 Der Koch und der Wirt", subtitle: "Hüter der Wärme", category: "Nebenberuf", desc: "Versorgt Reisende und Abenteurer mit nahrhaften Mahlzeiten." },
-    feinschmied: { title: "🛠️ Der Feinschmied", subtitle: "Der Architekt des Details", category: "Hauptberuf", desc: "Meister der filigranen Metallarbeiten." },
-    bogner: { title: "🏹 Der Bogner", subtitle: "Meister der Spannung", category: "Hauptberuf", desc: "Baut und verfeinert Bögen und Armbrüste." },
-    alchemist: { title: "⚗️ Der Alchemist", subtitle: "Grenzgänger des Verstandes", category: "Hauptberuf", desc: "Arbeitet mit Tränken, Essenzen und Giften." },
-    sucher: { title: "📋 Der Sucher nach Arbeitern", subtitle: "Händler der Hoffnung", category: "Nebenberuf", desc: "Vermittelt Arbeitskräfte und Kontakte." },
-    landwirt: { title: "🌾 Der Landwirt", subtitle: "Der stille Pfeiler der Welt", category: "Nebenberuf", desc: "Baut Getreide an und pflegt Nutztiere." },
-    waffenschmied: { title: "⚔️ Der Waffenschmied", subtitle: "Der, der Entscheidungen formt", category: "Hauptberuf", desc: "Schmiedet Schwerter und Klingen." },
-    ruestungsschmied: { title: "🛡️ Der Rüstungsschmied", subtitle: "Hüter des Überlebens", category: "Hauptberuf", desc: "Baut Plattenpanzer und Schilde." },
-    monchpriester: { title: "✨ Mönch und Priester", subtitle: "Diener des Glaubens", category: "Nebenberuf", desc: "Widmet sein Leben spiritueller Hingabe." },
-    heiler: { title: "🌿 Heiler", subtitle: "Retter in der Not", category: "Nebenberuf", desc: "Verarztet Wunden und lindert Krankheiten." }
-};
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo(0, 0);
+}
 
-let currentRaceKey = "";
-let magicRulesAccepted = false;
-let verifiedUsername = "";
-let sizeConfirmed = false;
-let sizeVerifiedUsername = "";
-let consentAccepted = false;
-let consentVerifiedUsername = "";
-
-function initRaceOverview() {
-    const list = document.getElementById("raceOverviewList");
-    list.innerHTML = "";
-    let sizeHtml = "";
-
-    for (let key in races) {
-        const r = races[key];
-        list.innerHTML += `
-            <div class="info-item clickable" onclick="openInfo('${key}')">
-                <h3>${r.title}</h3>
-                <p>Klicke für Details, Unterarten, Stärken & Schwächen.</p>
-            </div>
-        `;
-        if (r.size) {
-            sizeHtml += `<p><strong>${r.title}:</strong> ${r.size}</p>`;
+function openInfo(type) {
+    if (type === 'raceOverview') {
+        const list = document.getElementById('raceOverviewList');
+        list.innerHTML = '';
+        for (let r in racesData) {
+            let item = document.createElement('div');
+            item.className = 'info-item clickable';
+            item.innerHTML = `<h3>${r}</h3><p>${racesData[r].desc}</p>`;
+            item.onclick = () => showRaceDetail(r);
+            list.appendChild(item);
         }
+        showPage('raceOverview');
+    } else if (type === 'magicOverview') {
+        const list = document.getElementById('magicOverviewList');
+        list.innerHTML = `
+            <div class="info-item"><h3>🔥 Feuer & Eis</h3><p>Elementare Zerstörung. Preis: Hitzewallungen, Frostschauer oder Narben.</p></div>
+            <div class="info-item"><h3>💧 Wasser & Erde</h3><p>Kontrolle über Natur und Statik. Preis: Erschöpfung, schwere Glieder.</p></div>
+            <div class="info-item"><h3>⚡ Blitz & Luft</h3><p>Schnelligkeit und Entladungen. Preis: Herzrasen, Nervenzucken.</p></div>
+            <div class="info-item"><h3>✨ Licht & Schatten</h3><p>Illusion und Arkanes. Preis: Sehstörungen, Albträume.</p></div>
+            <div class="info-item"><h3>🩸 Blutmagie</h3><p>Mächtig, aber direkt auf Kosten der eigenen Lebenskraft.</p></div>
+        `;
+        showPage('magicOverview');
+    } else if (type === 'jobOverview') {
+        const list = document.getElementById('jobOverviewList');
+        list.innerHTML = '';
+        for (let j in jobsData) {
+            let item = document.createElement('div');
+            item.className = 'info-item';
+            item.innerHTML = `<div class="job-subtext">${jobsData[j].subtitle}</div><h3>${j}</h3><p class="job-desc">${jobsData[j].desc}</p>`;
+            list.appendChild(item);
+        }
+        showPage('jobOverview');
+    } else if (type === 'sizeOverview') {
+        const box = document.getElementById('sizeListContent');
+        box.innerHTML = `
+            <p><strong>Mensch / Elf / Tiefling:</strong> ca. 1,65 m – 1,90 m</p>
+            <p><strong>Zwerg / Gnom / Halbling:</strong> ca. 1,00 m – 1,35 m</p>
+            <p><strong>Orc / Halborc / Minotaurus:</strong> ca. 1,90 m – 2,30 m</p>
+            <p><strong>Troll / Halbgigant:</strong> ca. 2,50 m – 3,00 m</p>
+        `;
+        showPage('sizeOverview');
     }
-    document.getElementById("sizeListContent").innerHTML = sizeHtml;
 }
 
-function initMagicOverview() {
-    const list = document.getElementById("magicOverviewList");
-    list.innerHTML = "";
-
-    for (let key in magicSchools) {
-        const m = magicSchools[key];
-        list.innerHTML += `
-            <div class="info-item">
-                <h3>${m.title}</h3>
-                <p><b>Benötigte Quelle:</b> ${m.source}</p>
-                <p class="job-subtext">💪 Stärken: ${m.strengths}</p>
-                <p class="job-desc">⚠️ Schwächen & Nebenwirkungen: ${m.weaknesses}</p>
-            </div>
-        `;
+let selectedRaceForDetail = '';
+function showRaceDetail(raceName) {
+    selectedRaceForDetail = raceName;
+    document.getElementById('raceTitle').innerText = raceName;
+    let data = racesData[raceName];
+    let html = `<p><strong>Beschreibung:</strong> ${data.desc}</p>`;
+    html += `<p><strong>Stärken:</strong> ${data.strength}</p>`;
+    html += `<p><strong>Schwächen:</strong> ${data.weakness}</p>`;
+    if (data.sub && data.sub.length > 0) {
+        html += `<p><strong>Verfügbare Unterarten:</strong> ${data.sub.join(', ')}</p>`;
     }
+    document.getElementById('raceContent').innerHTML = html;
+    showPage('raceDetail');
 }
 
-function initJobOverview() {
-    const list = document.getElementById("jobOverviewList");
-    list.innerHTML = "";
-
-    for (let key in jobs) {
-        const j = jobs[key];
-        list.innerHTML += `
-            <div class="info-item">
-                <h3>${j.title}</h3>
-                <p><b>Typ:</b> ${j.category}</p>
-                <p class="job-subtext">${j.subtitle}</p>
-                <p class="job-desc">${j.desc}</p>
-            </div>
-        `;
-    }
+function selectRace() {
+    document.getElementById('race').value = selectedRaceForDetail;
+    updateSubraces();
+    showPage('characterPage');
 }
 
 function updateSubraces() {
-    const raceVal = document.getElementById("race").value;
-    const container = document.getElementById("subraceContainer");
-    const list = document.getElementById("subraceList");
-
-    list.innerHTML = "";
-    if (races[raceVal] && races[raceVal].subraces) {
-        races[raceVal].subraces.forEach(sub => {
-            list.innerHTML += `
-                <label class="checkbox-item">
-                    <input type="checkbox" value="${sub}" class="subrace-check">
-                    ${sub}
-                </label>
-            `;
+    let race = document.getElementById('race').value;
+    let container = document.getElementById('subraceContainer');
+    let list = document.getElementById('subraceList');
+    list.innerHTML = '';
+    
+    if (racesData[race] && racesData[race].sub) {
+        container.style.display = 'block';
+        racesData[race].sub.forEach(sub => {
+            let label = document.createElement('label');
+            label.className = 'checkbox-item';
+            label.innerHTML = `<input type="checkbox" value="${sub}" class="subrace-check"> ${sub}`;
+            list.appendChild(label);
         });
-        container.style.display = "block";
     } else {
-        container.style.display = "none";
+        container.style.display = 'none';
     }
 }
 
 function toggleMagicSection() {
-    const hasMagic = document.getElementById("hasMagic").checked;
-    const rulesBtn = document.getElementById("openRulesBtn");
-    const magicSec = document.getElementById("magicSection");
-
-    if (hasMagic) {
-        rulesBtn.style.display = "inline-flex";
-        if (!magicRulesAccepted) {
-            openMagicRulesModal();
-        } else {
-            magicSec.style.display = "block";
-        }
-    } else {
-        rulesBtn.style.display = "none";
-        magicSec.style.display = "none";
-        magicRulesAccepted = false;
-    }
+    let hasMagic = document.getElementById('hasMagic').checked;
+    document.getElementById('magicSection').style.display = hasMagic ? 'block' : 'none';
+    document.getElementById('openRulesBtn').style.display = hasMagic ? 'inline-flex' : 'none';
 }
 
 function openMagicRulesModal() {
-    document.getElementById("magicRulesModal").style.display = "flex";
+    document.getElementById('magicRulesModal').style.display = 'flex';
 }
 
 function confirmMagicRules() {
-    const username = document.getElementById("modalUsername").value.trim();
-    const checked = document.getElementById("modalCheckRules").checked;
-
-    if (!username) { alert("Bitte gib deinen Usernamen ein."); return; }
-    if (!checked) { alert("Du musst bestätigen, dass du die Magieregeln gelesen hast."); return; }
-
-    verifiedUsername = username;
-    magicRulesAccepted = true;
-    document.getElementById("magicRulesModal").style.display = "none";
-    document.getElementById("magicSection").style.display = "block";
-}
-
-/* LOGIK FÜR FESSELN & SKLAVEREI MODAL */
-function handleConsentToggle(checkbox) {
-    if (checkbox.checked) {
-        if (!consentAccepted) {
-            document.getElementById("consentModal").style.display = "flex";
-        }
-    } else {
-        consentAccepted = false;
-        consentVerifiedUsername = "";
+    let user = document.getElementById('modalUsername').value.trim();
+    let checked = document.getElementById('modalCheckRules').checked;
+    if (!user) {
+        alert('Bitte gib deinen Benutzernamen ein.');
+        return;
     }
-}
-
-function confirmConsentModal() {
-    const username = document.getElementById("consentModalUsername").value.trim();
-    const checked = document.getElementById("consentModalCheck").checked;
-
-    if (!username) { alert("Bitte gib deinen Usernamen ein."); return; }
-    if (!checked) { alert("Du musst der Absicherung zustimmen."); return; }
-
-    consentVerifiedUsername = username;
-    consentAccepted = true;
-    document.getElementById("consentModal").style.display = "none";
-    document.getElementById("consentCheck").checked = true;
-}
-
-function cancelConsentModal() {
-    document.getElementById("consentModal").style.display = "none";
-    document.getElementById("consentCheck").checked = false;
-    consentAccepted = false;
+    if (!checked) {
+        alert('Du musst den Magieregeln zustimmen, um fortzufahren.');
+        return;
+    }
+    document.getElementById('magicRulesModal').style.display = 'none';
 }
 
 function toggleField(fieldId, show) {
-    document.getElementById(fieldId).style.display = show ? "block" : "none";
+    document.getElementById(fieldId).style.display = show ? 'block' : 'none';
 }
 
-function showPage(pageID) {
-    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
-    document.getElementById(pageID).classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function openInfo(type) {
-    if (type === "raceOverview") { showPage("raceOverview"); return; }
-    if (type === "magicOverview") { showPage("magicOverview"); return; }
-    if (type === "jobOverview") { showPage("jobOverview"); return; }
-    if (type === "sizeOverview") { showPage("sizeOverview"); return; }
-
-    if (races[type]) {
-        currentRaceKey = type;
-        document.getElementById("raceTitle").innerHTML = races[type].title;
-        document.getElementById("raceContent").innerHTML = races[type].content;
-        showPage("raceDetail");
-        return;
+function handleConsentToggle(checkbox) {
+    if (checkbox.checked) {
+        let confirmBox = confirm("Achtung: Du bestätigst hiermit, dass Fesseln & Versklavung im RP für deinen Charakter in Ordnung sind. Bist du sicher?");
+        if (!confirmBox) {
+            checkbox.checked = false;
+        }
     }
-}
-
-function selectRace() {
-    document.getElementById("race").value = races[currentRaceKey].value;
-    updateSubraces();
-    showPage("characterPage");
-}
-
-/* GRÖSSEN-CHECK NACH GESCHLECHT & BILDERSTELLUNG */
-function parseSizeToMeters(sizeStr) {
-    if (!sizeStr) return null;
-    let clean = sizeStr.toLowerCase().replace("m", "").replace(",", ".").trim();
-    let num = parseFloat(clean);
-    return isNaN(num) ? null : num;
 }
 
 function preCheckCharacter() {
-    const name = document.getElementById("name").value.trim();
-    const race = document.getElementById("race").value;
-    const gender = document.getElementById("gender").value;
-    const sizeInput = document.getElementById("size").value.trim();
-
-    if (!name) { alert("Bitte gib einen Namen ein."); return; }
-    if (!race) { alert("Bitte wähle ein Volk / eine Rasse aus."); return; }
-
-    const hasMagic = document.getElementById("hasMagic").checked;
-    if (hasMagic && !magicRulesAccepted) {
-        alert("Du musst zuerst die Magieregeln lesen und bestätigen!");
-        openMagicRulesModal();
+    let name = document.getElementById('name').value.trim();
+    if (!name) {
+        alert('Bitte gib mindestens einen Namen für deinen Charakter an.');
+        showPage('characterPage');
         return;
     }
-
-    if (sizeInput && !sizeConfirmed && races[race]) {
-        const rData = races[race];
-        let valInM = parseSizeToMeters(sizeInput);
-        
-        if (valInM !== null && rData.minM !== undefined) {
-            let minAllowed = (gender === "Weiblich" && rData.minF) ? rData.minF : rData.minM;
-            let maxAllowed = (gender === "Weiblich" && rData.maxF) ? rData.maxF : rData.maxM;
-
-            if (valInM < minAllowed || valInM > maxAllowed) {
-                document.getElementById("sizeComparisonText").innerHTML = `Gewählte Rasse (${race} - ${gender || "Allgemein"}): Vorgabe ${rData.size}<br>Deine Größe (${sizeInput}) liegt außerhalb dieses Bereichs!`;
-                document.getElementById("sizeConfirmModal").style.display = "flex";
-                return;
-            }
-        }
-    }
-
-    generateCharacterFinal();
+    generateCharacterImage();
 }
 
-function confirmSizeAndProceed() {
-    const username = document.getElementById("sizeModalUsername").value.trim();
-    const checked = document.getElementById("sizeModalCheck").checked;
+function generateCharacterImage() {
+    // Allgemeine Daten
+    document.getElementById('imgName').innerText = document.getElementById('name').value || 'Unbenannt';
+    
+    let race = document.getElementById('race').value || 'Unbekannt';
+    let subraces = [];
+    document.querySelectorAll('.subrace-check:checked').forEach(cb => subraces.push(cb.value));
+    document.getElementById('imgRaceSub').innerText = race + (subraces.length > 0 ? ' (' + subraces.join(', ') + ')' : '');
 
-    if (!username) { alert("Bitte gib deinen Usernamen ein."); return; }
-    if (!checked) { alert("Du musst bestätigen, dass du mit der Größe einverstanden bist."); return; }
+    document.getElementById('imgAge').innerText = document.getElementById('age').value || '-';
+    document.getElementById('imgGender').innerText = document.getElementById('gender').value || '-';
+    document.getElementById('imgSize').innerText = document.getElementById('size').value || '-';
+    document.getElementById('imgAlignment').innerText = document.getElementById('alignment').value || '-';
 
-    sizeVerifiedUsername = username;
-    sizeConfirmed = true;
-    document.getElementById("sizeConfirmModal").style.display = "none";
-    generateCharacterFinal();
-}
+    document.getElementById('imgMainJob').innerText = document.getElementById('mainJob').value || 'Keiner';
+    document.getElementById('imgSubJob').innerText = document.getElementById('subJob').value || 'Keiner';
 
-function closeSizeModalToEdit() {
-    document.getElementById("sizeConfirmModal").style.display = "none";
-    document.getElementById("size").focus();
-}
-
-let lastCanvas = null;
-
-function generateCharacterFinal() {
-    const name = document.getElementById("name").value.trim();
-    const race = document.getElementById("race").value;
-
-    document.getElementById("imgName").textContent = name;
-    document.getElementById("imgAge").textContent = document.getElementById("age").value || "-";
-    document.getElementById("imgGender").textContent = document.getElementById("gender").value || "-";
-    document.getElementById("imgSize").textContent = document.getElementById("size").value || "-";
-    document.getElementById("imgRace").textContent = race;
-    document.getElementById("imgAlignment").textContent = document.getElementById("alignment").value || "-";
-
-    const sizeStatusEl = document.getElementById("imgSizeStatus");
-    if (sizeConfirmed && sizeVerifiedUsername) {
-        sizeStatusEl.textContent = "✓ Sondergröße bestätigt von User: " + sizeVerifiedUsername;
-        sizeStatusEl.style.display = "inline-block";
+    // Verwandlung
+    let hasTransform = document.getElementById('hasTransform').checked;
+    let transformBox = document.getElementById('imgTransformBox');
+    if (hasTransform) {
+        transformBox.style.display = 'block';
+        document.getElementById('imgTransformDetails').innerText = document.getElementById('transformInput').value || 'Keine Angabe zur Gestaltwandlung.';
     } else {
-        sizeStatusEl.style.display = "none";
+        transformBox.style.display = 'none';
     }
 
-    // Unterarten Badges
-    const selectedSubraces = Array.from(document.querySelectorAll(".subrace-check:checked")).map(cb => cb.value);
-    const subContainer = document.getElementById("imgSubracesList");
-    subContainer.innerHTML = "";
-    if (selectedSubraces.length > 0) {
-        selectedSubraces.forEach(sub => {
-            subContainer.innerHTML += `<span class="img-badge">${sub}</span>`;
-        });
-    } else {
-        subContainer.textContent = "Keine spezielle Unterart";
-    }
+    // Aussehen
+    let hair = document.getElementById('hairInput').value;
+    let eyes = document.getElementById('eyesInput').value;
+    document.getElementById('imgHairEyes').innerText = (hair || eyes) ? `Haare: ${hair || '-'} | Augen: ${eyes || '-'}` : '-';
+    document.getElementById('imgAppearance').innerText = document.getElementById('appearanceInput').value || '-';
 
-    // Magie Badges & Details
-    const hasMagic = document.getElementById("hasMagic").checked;
-    const imgMagicSec = document.getElementById("imgMagicSection");
+    // Magie
+    let hasMagic = document.getElementById('hasMagic').checked;
+    let magicBox = document.getElementById('imgMagicBox');
     if (hasMagic) {
-        const selectedMagic = Array.from(document.querySelectorAll(".magic-check:checked")).map(cb => cb.value);
-        const magicBadgesBox = document.getElementById("imgMagicBadges");
-        magicBadgesBox.innerHTML = "";
-        
-        if (selectedMagic.length > 0) {
-            selectedMagic.forEach(m => {
-                magicBadgesBox.innerHTML += `<span class="img-badge">✨ ${m}</span>`;
-            });
-        } else {
-            magicBadgesBox.innerHTML = `<span class="img-badge">Allgemeine Magie</span>`;
-        }
-
-        const magicDetailsVal = document.getElementById("magicDetailsInput").value.trim();
-        const detailsBox = document.getElementById("imgMagicDetailsBox");
-        if (magicDetailsVal) {
-            document.getElementById("imgMagicDetailsText").textContent = magicDetailsVal;
-            detailsBox.style.display = "block";
-        } else {
-            detailsBox.style.display = "none";
-        }
-        
-        document.getElementById("imgMagicRulesStatus").textContent = "✓ Magieregeln gelesen & akzeptiert von User: " + verifiedUsername;
-        imgMagicSec.style.display = "block";
+        magicBox.style.display = 'block';
+        let elements = [];
+        document.querySelectorAll('.magic-check:checked').forEach(cb => elements.push(cb.value));
+        document.getElementById('imgMagicElements').innerHTML = elements.map(e => `<span class="img-badge">${e}</span>`).join(' ');
+        document.getElementById('imgMagicDetails').innerText = document.getElementById('magicDetailsInput').value || 'Keine Details angegeben.';
     } else {
-        imgMagicSec.style.display = "none";
+        magicBox.style.display = 'none';
     }
 
-    // Anhängsel Badges
-    let attachmentsArr = [];
-    if (document.getElementById("hasEars").checked) {
-        let val = document.getElementById("earsInput").value.trim();
-        attachmentsArr.push("Ohren: " + (val || "Ja"));
-    }
-    if (document.getElementById("hasWings").checked) {
-        let val = document.getElementById("wingsInput").value.trim();
-        attachmentsArr.push("Flügel: " + (val || "Ja"));
-    }
-    if (document.getElementById("hasTail").checked) {
-        let val = document.getElementById("tailInput").value.trim();
-        attachmentsArr.push("Schwanz: " + (val || "Ja"));
-    }
-    if (document.getElementById("hasOther").checked) {
-        let val = document.getElementById("otherInput").value.trim();
-        attachmentsArr.push("Sonstige: " + (val || "Ja"));
-    }
+    // Anhängsel
+    let accList = [];
+    if (document.getElementById('hasEars').checked) accList.push(`Ohren: ${document.getElementById('earsInput').value || 'Ja'}`);
+    if (document.getElementById('hasWings').checked) accList.push(`Flügel: ${document.getElementById('wingsInput').value || 'Ja'}`);
+    if (document.getElementById('hasTail').checked) accList.push(`Schwanz: ${document.getElementById('tailInput').value || 'Ja'}`);
+    if (document.getElementById('hasOther').checked) accList.push(`Sonstiges: ${document.getElementById('otherInput').value || 'Ja'}`);
 
-    const imgAttachSec = document.getElementById("imgAttachmentsSection");
-    const attachBadgesBox = document.getElementById("imgAttachmentsBadges");
-    attachBadgesBox.innerHTML = "";
-
-    if (attachmentsArr.length > 0) {
-        attachmentsArr.forEach(att => {
-            attachBadgesBox.innerHTML += `<span class="img-badge">💎 ${att}</span>`;
-        });
-        imgAttachSec.style.display = "block";
+    let accBox = document.getElementById('imgAccessoriesBox');
+    if (accList.length > 0) {
+        accBox.style.display = 'block';
+        document.getElementById('imgAccessoriesList').innerHTML = accList.map(a => `<span class="img-badge">${a}</span>`).join(' ');
     } else {
-        imgAttachSec.style.display = "none";
+        accBox.style.display = 'none';
     }
 
-    document.getElementById("imgMainJob").textContent = document.getElementById("mainJob").value || "-";
-    document.getElementById("imgSubJob").textContent = document.getElementById("subJob").value || "Keiner";
+    // Hintergrund, Ziele, Eigenschaften
+    document.getElementById('imgBackground').innerText = document.getElementById('background').value || '-';
+    document.getElementById('imgGoals').innerText = document.getElementById('goalsInput').value || '-';
+    document.getElementById('imgTraits').innerText = document.getElementById('traits').value || '-';
+    document.getElementById('imgDate').innerText = new Date().toLocaleDateString('de-DE');
 
-    // Aussehen auf das Bild übertragen
-    const hairVal = document.getElementById("hairInput").value.trim();
-    const eyesVal = document.getElementById("eyesInput").value.trim();
-    const appVal = document.getElementById("appearanceInput").value.trim();
-    const imgAppearanceBox = document.getElementById("imgAppearanceBox");
-
-    if (hairVal || eyesVal || appVal) {
-        document.getElementById("imgHair").textContent = hairVal || "-";
-        document.getElementById("imgEyes").textContent = eyesVal || "-";
-        document.getElementById("imgAppearanceText").textContent = appVal || "Keine weiteren Angaben";
-        imgAppearanceBox.style.display = "block";
-    } else {
-        imgAppearanceBox.style.display = "none";
-    }
-
-    document.getElementById("imgBackground").textContent = document.getElementById("background").value || "-";
-    document.getElementById("imgAbilities").textContent = document.getElementById("abilities").value || "-";
-    document.getElementById("imgTraits").textContent = document.getElementById("traits").value || "-";
-
-    // OOC Infos auf das Bild rendern
-    const imgOocBox = document.getElementById("imgOocBox");
-    const imgConsentWrapper = document.getElementById("imgConsentWrapper");
-    const imgPhobiasWrapper = document.getElementById("imgPhobiasWrapper");
-    let hasOoc = false;
-
-    if (consentAccepted && consentVerifiedUsername) {
-        document.getElementById("imgConsentUser").textContent = consentVerifiedUsername;
-        imgConsentWrapper.style.display = "block";
-        hasOoc = true;
-    } else {
-        imgConsentWrapper.style.display = "none";
-    }
-
-    const phobiasVal = document.getElementById("phobias").value.trim();
-    if (phobiasVal) {
-        document.getElementById("imgPhobiasText").textContent = phobiasVal;
-        imgPhobiasWrapper.style.display = "block";
-        hasOoc = true;
-    } else {
-        imgPhobiasWrapper.style.display = "none";
-    }
-
-    imgOocBox.style.display = hasOoc ? "block" : "none";
-
-    // Bild erstellen
-    createPNG(name);
-}
-
-function createPNG(name) {
-    const card = document.getElementById("characterCard");
-    html2canvas(card, { scale: 2, backgroundColor: null }).then(canvas => {
-        lastCanvas = canvas;
-        const link = document.createElement("a");
-        const safeName = name ? name.replace(/[^a-z0-9äöüÄÖÜß_-]/gi, "_") : "Charakter";
-        link.download = "Chroniken-" + safeName + ".png";
-        link.href = canvas.toDataURL("image/png");
+    // Als Canvas rendern
+    let exportCard = document.getElementById('exportCard');
+    html2canvas(exportCard, { scale: 2, backgroundColor: null }).then(canvas => {
+        let link = document.createElement('a');
+        link.download = (document.getElementById('name').value || 'Charakter') + '_Charakterbogen.png';
+        link.href = canvas.toDataURL('image/png');
         link.click();
 
-        document.getElementById("success").style.display = "block";
-        document.getElementById("success").scrollIntoView({ behavior: "smooth" });
+        document.getElementById('success').style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
     });
 }
 
 function downloadAgain() {
-    if (!lastCanvas) return;
-    const name = document.getElementById("name").value.trim();
-    const safeName = name ? name.replace(/[^a-z0-9äöüÄÖÜß_-]/gi, "_") : "Charakter";
-    const link = document.createElement("a");
-    link.download = "Chroniken-" + safeName + ".png";
-    link.href = lastCanvas.toDataURL("image/png");
-    link.click();
-}
-
-/* LOCALSTORAGE & JSON EXPORT/IMPORT LOGIK */
-
-function collectCharacterData() {
-    return {
-        name: document.getElementById("name").value,
-        age: document.getElementById("age").value,
-        gender: document.getElementById("gender").value,
-        size: document.getElementById("size").value,
-        race: document.getElementById("race").value,
-        subraces: Array.from(document.querySelectorAll(".subrace-check:checked")).map(cb => cb.value),
-        hasMagic: document.getElementById("hasMagic").checked,
-        magicSchools: Array.from(document.querySelectorAll(".magic-check:checked")).map(cb => cb.value),
-        magicDetails: document.getElementById("magicDetailsInput").value,
-        magicRulesAccepted: magicRulesAccepted,
-        verifiedUsername: verifiedUsername,
-        hasEars: document.getElementById("hasEars").checked,
-        earsInput: document.getElementById("earsInput").value,
-        hasWings: document.getElementById("hasWings").checked,
-        wingsInput: document.getElementById("wingsInput").value,
-        hasTail: document.getElementById("hasTail").checked,
-        tailInput: document.getElementById("tailInput").value,
-        hasOther: document.getElementById("hasOther").checked,
-        otherInput: document.getElementById("otherInput").value,
-        mainJob: document.getElementById("mainJob").value,
-        subJob: document.getElementById("subJob").value,
-        alignment: document.getElementById("alignment").value,
-        hairInput: document.getElementById("hairInput").value,
-        eyesInput: document.getElementById("eyesInput").value,
-        appearanceInput: document.getElementById("appearanceInput").value,
-        background: document.getElementById("background").value,
-        abilities: document.getElementById("abilities").value,
-        traits: document.getElementById("traits").value,
-        phobias: document.getElementById("phobias").value,
-        sizeConfirmed: sizeConfirmed,
-        sizeVerifiedUsername: sizeVerifiedUsername,
-        consentAccepted: consentAccepted,
-        consentVerifiedUsername: consentVerifiedUsername
-    };
-}
-
-function applyCharacterData(data) {
-    if (!data) return;
-    document.getElementById("name").value = data.name || "";
-    document.getElementById("age").value = data.age || "";
-    document.getElementById("gender").value = data.gender || "";
-    document.getElementById("size").value = data.size || "";
-    document.getElementById("race").value = data.race || "";
-    
-    updateSubraces();
-    if (data.subraces && Array.isArray(data.subraces)) {
-        setTimeout(() => {
-            document.querySelectorAll(".subrace-check").forEach(cb => {
-                if (data.subraces.includes(cb.value)) cb.checked = true;
-            });
-        }, 50);
-    }
-
-    document.getElementById("hasMagic").checked = !!data.hasMagic;
-    toggleMagicSection();
-    magicRulesAccepted = !!data.magicRulesAccepted;
-    verifiedUsername = data.verifiedUsername || "";
-
-    if (data.magicSchools && Array.isArray(data.magicSchools)) {
-        document.querySelectorAll(".magic-check").forEach(cb => {
-            if (data.magicSchools.includes(cb.value)) cb.checked = true;
-        });
-    }
-    document.getElementById("magicDetailsInput").value = data.magicDetails || "";
-
-    document.getElementById("hasEars").checked = !!data.hasEars;
-    toggleField('earsField', !!data.hasEars);
-    document.getElementById("earsInput").value = data.earsInput || "";
-
-    document.getElementById("hasWings").checked = !!data.hasWings;
-    toggleField('wingsField', !!data.hasWings);
-    document.getElementById("wingsInput").value = data.wingsInput || "";
-
-    document.getElementById("hasTail").checked = !!data.hasTail;
-    toggleField('tailField', !!data.hasTail);
-    document.getElementById("tailInput").value = data.tailInput || "";
-
-    document.getElementById("hasOther").checked = !!data.hasOther;
-    toggleField('otherField', !!data.hasOther);
-    document.getElementById("otherInput").value = data.otherInput || "";
-
-    document.getElementById("mainJob").value = data.mainJob || "";
-    document.getElementById("subJob").value = data.subJob || "";
-    document.getElementById("alignment").value = data.alignment || "";
-    document.getElementById("hairInput").value = data.hairInput || "";
-    document.getElementById("eyesInput").value = data.eyesInput || "";
-    document.getElementById("appearanceInput").value = data.appearanceInput || "";
-    document.getElementById("background").value = data.background || "";
-    document.getElementById("abilities").value = data.abilities || "";
-    document.getElementById("traits").value = data.traits || "";
-    document.getElementById("phobias").value = data.phobias || "";
-
-    sizeConfirmed = !!data.sizeConfirmed;
-    sizeVerifiedUsername = data.sizeVerifiedUsername || "";
-    
-    consentAccepted = !!data.consentAccepted;
-    consentVerifiedUsername = data.consentVerifiedUsername || "";
-    document.getElementById("consentCheck").checked = consentAccepted;
+    generateCharacterImage();
 }
 
 function saveToLocalStorage() {
-    const data = collectCharacterData();
-    localStorage.setItem("chroniken_charakter", JSON.stringify(data));
-    const status = document.getElementById("saveStatus");
-    status.style.display = "inline-block";
-    setTimeout(() => { status.style.display = "none"; }, 3000);
+    let data = {
+        name: document.getElementById('name').value,
+        age: document.getElementById('age').value,
+        gender: document.getElementById('gender').value,
+        size: document.getElementById('size').value,
+        race: document.getElementById('race').value,
+        hasTransform: document.getElementById('hasTransform').checked,
+        transformInput: document.getElementById('transformInput').value,
+        mainJob: document.getElementById('mainJob').value,
+        subJob: document.getElementById('subJob').value,
+        alignment: document.getElementById('alignment').value,
+        background: document.getElementById('background').value,
+        goalsInput: document.getElementById('goalsInput').value,
+        abilities: document.getElementById('abilities').value,
+        traits: document.getElementById('traits').value
+    };
+    localStorage.setItem('character_draft', JSON.stringify(data));
+    let status = document.getElementById('saveStatus');
+    status.style.display = 'inline';
+    setTimeout(() => { status.style.display = 'none'; }, 3000);
 }
 
 function exportJSON() {
-    const data = collectCharacterData();
-    const jsonStr = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonStr], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    const safeName = data.name ? data.name.replace(/[^a-z0-9äöüÄÖÜß_-]/gi, "_") : "Charakter";
-    link.download = "Chroniken-" + safeName + ".json";
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
+    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
+        name: document.getElementById('name').value,
+        race: document.getElementById('race').value,
+        transform: document.getElementById('transformInput').value,
+        mainJob: document.getElementById('mainJob').value,
+        subJob: document.getElementById('subJob').value,
+        goals: document.getElementById('goalsInput').value
+    }, null, 2));
+    let dlAnchor = document.createElement('a');
+    dlAnchor.setAttribute("href", dataStr);
+    dlAnchor.setAttribute("download", "charakter.json");
+    dlAnchor.click();
 }
 
 function importJSON(event) {
-    const file = event.target.files[0];
+    let file = event.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = function(e) {
         try {
-            const data = JSON.parse(e.target.result);
-            applyCharacterData(data);
-            alert("Charakter erfolgreich aus JSON importiert!");
-        } catch (err) {
-            alert("Fehler beim Lesen der JSON-Datei. Ungültiges Format.");
+            let json = JSON.parse(e.target.result);
+            if (json.name) document.getElementById('name').value = json.name;
+            if (json.race) { document.getElementById('race').value = json.race; updateSubraces(); }
+            if (json.transform) { 
+                document.getElementById('hasTransform').checked = true; 
+                toggleField('transformFieldContainer', true);
+                document.getElementById('transformInput').value = json.transform;
+            }
+            if (json.mainJob) document.getElementById('mainJob').value = json.mainJob;
+            if (json.subJob) document.getElementById('subJob').value = json.subJob;
+            if (json.goals) document.getElementById('goalsInput').value = json.goals;
+            alert('Daten erfolgreich importiert!');
+        } catch(err) {
+            alert('Fehler beim Lesen der JSON-Datei.');
         }
     };
     reader.readAsText(file);
-    event.target.value = "";
 }
-
-window.onload = () => {
-    initRaceOverview();
-    initMagicOverview();
-    initJobOverview();
-
-    const saved = localStorage.getItem("chroniken_charakter");
-    if (saved) {
-        try {
-            applyCharacterData(JSON.parse(saved));
-        } catch (e) {
-            console.error("Konnte lokalen Entwurf nicht laden.");
-        }
-    }
-};
 </script>
 
 </body>
