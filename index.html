@@ -1106,139 +1106,249 @@ textarea {
 </div>
 
 <script>
-/* DATEN FÜR VÖLKER UND UNTERARTEN */
+/* DATEN FÜR VÖLKER UND UNTERARTEN MIT VOLLSTÄNDIGEN BESCHREIBUNGEN & GRÖSSEN */
 const races = {
     Mensch: {
-        title: "🧑 Mensch", value: "Mensch",
+        title: "🧑 Mensch",
+        value: "Mensch",
         subraces: ["Königreichsmensch", "Freier Mensch", "Küstenmensch", "Steppenmensch", "Nordmensch", "Wüstenmensch", "Magiermensch", "Blutgebundener Mensch", "Naturmensch", "Kriegerkult-Mensch"],
-        size: "M: 155-195 cm | F: 150-185 cm", minM: 1.55, maxM: 1.95, minF: 1.50, maxF: 1.85,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Wandelbarstes Volk mit hoher Anpassungsfähigkeit und schnellem Lernen. Lebensspanne: 60-100 Jahre.</p></div>`
+        size: "M: 155-195 cm | F: 150-185 cm",
+        minM: 1.55, maxM: 1.95, minF: 1.50, maxF: 1.85,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Wandelbarstes Volk mit hoher Anpassungsfähigkeit und schnellem Lernen. Lebensspanne: 60-100 Jahre.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Hohe Anpassungsfähigkeit, schnelles Lernen, große emotionale Bandbreite, starker Überlebensinstinkt.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Keine angeborene Spezialisierung von Natur aus.</p></div>`
     },
     Elf: {
-        title: "🧝 Elf", value: "Elf",
+        title: "🧝 Elf",
+        value: "Elf",
         subraces: ["Waldelf", "Hochelf", "Dunkelelf", "Eiself", "Seeelf", "Mondelf", "Sonnenelf"],
-        size: "M: 150-210 cm | F: 150-195 cm", minM: 1.50, maxM: 2.10, minF: 1.50, maxF: 1.95,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Alte Völker, eng mit Magie und Natur verbunden. Lebensspanne: 300-900 Jahre.</p></div>`
+        size: "M: 150-210 cm | F: 150-195 cm",
+        minM: 1.50, maxM: 2.10, minF: 1.50, maxF: 1.95,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Alte Völker, eng mit Magie und Natur verbunden. Lebensspanne: 300-900 Jahre.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Hohe Magieaffinität, erhöhte Beweglichkeit/Reaktion, Resistenz gegen Krankheiten, starke geistige Disziplin.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Oft Arroganz, langsame Anpassung an urbane Chaos-Zustände.</p></div>`
     },
     Zwerg: {
-        title: "⛏️ Zwerg", value: "Zwerg",
+        title: "⛏️ Zwerg",
+        value: "Zwerg",
         subraces: ["Bergzwerg", "Feuerzwerg", "Frostzwerg", "Tiefenzwerg", "Küstenzwerg", "Blutgeschworener Zwerg"],
-        size: "M: 120-155 cm | F: 115-150 cm", minM: 1.20, maxM: 1.55, minF: 1.15, maxF: 1.50,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Kinder von Stein, Erz und Feuer. Robust. Lebensspanne: 250-500 Jahre.</p></div>`
+        size: "M: 120-155 cm | F: 115-150 cm",
+        minM: 1.20, maxM: 1.55, minF: 1.15, maxF: 1.50,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Kinder von Stein, Erz und Feuer. Robust, Giftresistenz. Lebensspanne: 250-500 Jahre.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Hohe physische Widerstandskraft, Affinität zu Metall/Stein, Zähigkeit gegen Gifte/Krankheiten, Handwerkskunst.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Starrheit bei Traditionen, oft misstrauisch gegenüber Neuem.</p></div>`
     },
     Orc: {
-        title: "👹 Orc", value: "Orc",
+        title: "👹 Orc",
+        value: "Orc",
         subraces: ["Kriegsorc", "Steppenorc", "Bergorc", "Grünorc", "Blutorc"],
-        size: "M: 180-230 cm | F: 170-215 cm", minM: 1.80, maxM: 2.30, minF: 1.70, maxF: 2.15,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Kriegerische Urvölker mit starkem Überlebensinstinkt. Lebensspanne: 60-90 Jahre.</p></div>`
+        size: "M: 180-230 cm | F: 170-215 cm",
+        minM: 1.80, maxM: 2.30, minF: 1.70, maxF: 2.15,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Kriegerische Urvölker mit starkem Überlebensinstinkt. Lebensspanne: 60-90 Jahre.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Hohe körperliche Stärke, natürliche Schmerztoleranz, starke Willenskraft.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Schnelle Alterung, oft Vorurteile durch kriegerische Kultur.</p></div>`
     },
     Kitsune: {
-        title: "🦊 Kitsune", value: "Kitsune",
+        title: "🦊 Kitsune",
+        value: "Kitsune",
         subraces: ["Weiße Kitsune", "Schwarze Kitsune"],
-        size: "Variabel (menschlich / tierisch)", minM: 1.40, maxM: 2.00, minF: 1.40, maxF: 1.90,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Mystisches Fuchsvolk mit Verbindung zu Illusionen.</p></div>`
+        size: "Variabel (menschlich / tierisch)",
+        minM: 1.40, maxM: 2.00, minF: 1.40, maxF: 1.90,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Mystisches Fuchsvolk / Yōkai mit Verbindung zu Illusionen, Gestaltwandel und Fuchsfeuer.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Illusionen, Gestaltwandel, Fuchsfeuer, Naturverbundenheit.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Eisen/magische Siegel behindern Verwandlung, Stolz.</p></div>`
     },
     Wolf: {
-        title: "🐺 Wolf", value: "Wolf",
+        title: "🐺 Wolf",
+        value: "Wolf",
         subraces: ["Silberwolf", "Schwarzwolf", "Weißer Geistwolf", "Dämonischer Wolf"],
-        size: "M: 200-250 cm | F: 160-220 cm", minM: 2.00, maxM: 2.50, minF: 1.60, maxF: 2.20,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Uralte Geschöpfe, verbunden mit dem Mond.</p></div>`
+        size: "M: 200-250 cm | F: 160-220 cm",
+        minM: 2.00, maxM: 2.50, minF: 1.60, maxF: 2.20,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Uralte Geschöpfe, verbunden mit dem Mond und Geistern. Lebensspanne bis 1200 Jahre.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Erhöhte Sinne, Schattenschritt, Mondbindung.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Empfindlich gegenüber Silber, Blutmond kann Instinkte stören.</p></div>`
     },
     Troll: {
-        title: "🧌 Troll", value: "Troll",
+        title: "🧌 Troll",
+        value: "Troll",
         subraces: ["Waldtroll", "Bergtroll"],
-        size: "200 - 250 cm", minM: 2.00, maxM: 2.50, minF: 2.00, maxF: 2.50,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 80-250 Jahre. Robuste Natur.</p></div>`
+        size: "200 - 250 cm",
+        minM: 2.00, maxM: 2.50, minF: 2.00, maxF: 2.50,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 80-250 Jahre. Robuste Natur und außergewöhnliche Regeneration.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Regenerationsmagie, Erdmagie, physische Stärke.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Grobe Art führt oft zu Missverständnissen.</p></div>`
     },
     Tiefling: {
-        title: "😈 Tiefling", value: "Tiefling",
+        title: "😈 Tiefling",
+        value: "Tiefling",
         subraces: ["Feuertiefling", "Schattentiefling"],
-        size: "150 - 220 cm", minM: 1.50, maxM: 2.20, minF: 1.50, maxF: 2.10,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Stark auf Elementar- und Illusionsmagie fokussiert.</p></div>`
+        size: "150 - 220 cm",
+        minM: 1.50, maxM: 2.20, minF: 1.50, maxF: 2.10,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 70-1000 Jahre. Stark auf Elementar- und Illusionsmagie fokussiert.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Feuermagie, Illusionsmagie, feurige Wandelform.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Misstrauen anderer Rassen.</p></div>`
     },
     Gnom: {
-        title: "🛠️ Gnom", value: "Gnom",
+        title: "🛠️ Gnom",
+        value: "Gnom",
         subraces: ["Felsgnom", "Waldgnom"],
-        size: "M: 80-160 cm | F: 90-120 cm", minM: 0.80, maxM: 1.60, minF: 0.90, maxF: 1.40,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Enge Verbindung zu Natur, Handwerk und Magie.</p></div>`
+        size: "M: 80-160 cm | F: 90-120 cm",
+        minM: 0.80, maxM: 1.60, minF: 0.90, maxF: 1.40,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 100-150 Jahre. Enge Verbindung zu Natur, Handwerk und Magie.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Illusionsmagie, Mechanomagie, Erfindungsreichtum.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Exzentrische Art.</p></div>`
     },
     Halbling: {
-        title: "🌾 Halbling", value: "Halbling",
+        title: "🌾 Halbling",
+        value: "Halbling",
         subraces: ["Leichtfuss", "Starkherz"],
-        size: "M: 80-160 cm | F: 90-120 cm", minM: 0.80, maxM: 1.60, minF: 0.90, maxF: 1.40,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Friedliche Lebensweise, Gastfreundschaft.</p></div>`
+        size: "M: 80-160 cm | F: 90-120 cm",
+        minM: 0.80, maxM: 1.60, minF: 0.90, maxF: 1.40,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 100-150 Jahre. Friedliche Lebensweise, Gastfreundschaft.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Heilmagie, Naturmagie, Gemeinschaftsgefühl.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Werden oft unterschätzt.</p></div>`
     },
     Minotaurus: {
-        title: "🐂 Minotaurus", value: "Minotaurus",
+        title: "🐂 Minotaurus",
+        value: "Minotaurus",
         subraces: ["Bergminotaurus", "Labyrinthminotaurus"],
-        size: "M: 210-280 cm | F: 180-260 cm", minM: 2.10, maxM: 2.80, minF: 1.80, maxF: 2.60,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Robuste Konstitution und Erdverbundenheit.</p></div>`
+        size: "M: 210-280 cm | F: 180-260 cm",
+        minM: 2.10, maxM: 2.80, minF: 1.80, maxF: 2.60,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 100-200 Jahre. Robuste Konstitution.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Erdmagie, Kraftmagie, Schutzmagie.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Imposante Präsenz.</p></div>`
     },
     Drachengeborener: {
-        title: "🐉 Drachengeborener", value: "Drachengeborener",
+        title: "🐉 Drachengeborener",
+        value: "Drachengeborener",
         subraces: ["Rotdrachen-Blut", "Eisdrachen-Blut", "Blitzdrachen-Blut"],
-        size: "M: 110-270 cm | F: 170-220 cm", minM: 1.50, maxM: 2.70, minF: 1.50, maxF: 2.20,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Drakonische Abstammung.</p></div>`
+        size: "M: 110-270 cm | F: 170-220 cm",
+        minM: 1.50, maxM: 2.70, minF: 1.50, maxF: 2.20,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 150-300 Jahre. Drakonische Abstammung.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Feuermagie, Drachenatem, Sturm-/Blitzmagie.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Enorme Kraft kann zu Spannungen führen.</p></div>`
     },
     Dämon: {
-        title: "🔥 Dämon", value: "Dämon",
+        title: "🔥 Dämon",
+        value: "Dämon",
         subraces: ["Flammendämon", "Seelendämon", "Schattenfeind"],
-        size: "M: 110-270 cm | F: 110-240 cm", minM: 1.50, maxM: 2.70, minF: 1.50, maxF: 2.40,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Übernatürliche Kräfte und Regeneration.</p></div>`
+        size: "M: 110-270 cm | F: 110-240 cm",
+        minM: 1.50, maxM: 2.70, minF: 1.50, maxF: 2.40,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 200-1500 Jahre. Starke Regeneration.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Flammenmagie, Seelenmagie, Blutmagie.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Misstrauen anderer Rassen.</p></div>`
     },
     Fee: {
-        title: "🧚 Fee", value: "Fee",
+        title: "🧚 Fee",
+        value: "Fee",
         subraces: ["Lichtfee", "Waldfee", "Schattenfee"],
-        size: "M: 80-150 cm | F: 80-140 cm", minM: 0.80, maxM: 1.50, minF: 0.80, maxF: 1.40,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Magische Verbindung zur Natur.</p></div>`
+        size: "M: 80-150 cm | F: 80-140 cm",
+        minM: 0.80, maxM: 1.50, minF: 0.80, maxF: 1.40,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 70-120 Jahre. Magische Verbindung zur Natur.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Naturmagie, Illusionsmagie, Größenveränderung.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Unzuverlässig.</p></div>`
     },
     Halbgigant: {
-        title: "🏔️ Halbgigant", value: "Halbgigant",
+        title: "🏔️ Halbgigant",
+        value: "Halbgigant",
         subraces: ["Stein-Halbgigant", "Frost-Halbgigant"],
-        size: "M: 200-270 cm | F: 200-250 cm", minM: 2.00, maxM: 2.70, minF: 2.00, maxF: 2.50,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Erdenmagie und physische Stärke.</p></div>`
+        size: "M: 200-270 cm | F: 200-250 cm",
+        minM: 2.00, maxM: 2.70, minF: 2.00, maxF: 2.50,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 100-150 Jahre. Robuste Natur.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Erdenmagie, Kraftmagie, Schutzmagie.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Territoriale Natur.</p></div>`
     },
     Goblin: {
-        title: "👺 Goblin", value: "Goblin",
+        title: "👺 Goblin",
+        value: "Goblin",
         subraces: ["Höhlengoblin", "Waldgoblin"],
-        size: "M: 50-160 cm | F: 50-130 cm", minM: 0.50, maxM: 1.60, minF: 0.50, maxF: 1.30,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Schläue und Alchemie.</p></div>`
+        size: "M: 50-160 cm | F: 50-130 cm",
+        minM: 0.50, maxM: 1.60, minF: 0.50, maxF: 1.30,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 40-70 Jahre. Risikobehaftete Lebensweise.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Illusionsmagie, Alchemie, Erdmagie.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Verschlagenheit.</p></div>`
     },
     Wasserwesen: {
-        title: "🌊 Wasserwesen", value: "Wasserwesen",
+        title: "🌊 Wasserwesen",
+        value: "Wasserwesen",
         subraces: ["Meereswesen", "Flusswesen"],
-        size: "M: 80-220 cm | F: 110-200 cm", minM: 0.80, maxM: 2.20, minF: 1.10, maxF: 2.00,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Heimat im nassen Element.</p></div>`
+        size: "M: 80-220 cm | F: 110-200 cm",
+        minM: 0.80, maxM: 2.20, minF: 1.10, maxF: 2.00,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 70-120 Jahre. Natürliche Umgebung im nassen Element.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Wassermagie, Eismagie, Heilmagie.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Spezielle Anforderungen.</p></div>`
     },
     Vogelwesen: {
-        title: "🦅 Vogelwesen", value: "Vogelwesen",
+        title: "🦅 Vogelwesen",
+        value: "Vogelwesen",
         subraces: ["Falkenwesen", "Eulenwesen", "Greifenblut"],
-        size: "M: 110-230 cm | F: 110-190 cm", minM: 1.10, maxM: 2.30, minF: 1.10, maxF: 1.90,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Verbindung zum Himmel und den Winden.</p></div>`
+        size: "M: 110-230 cm | F: 110-190 cm",
+        minM: 1.10, maxM: 2.30, minF: 1.10, maxF: 1.90,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 60-100 Jahre. Verbindung zum Himmel.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Luftmagie, Lichtmagie, Flugverwandlung.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Spezielle Lebensweise.</p></div>`
     },
     Tierwesen: {
-        title: "🐾 Tierwesen", value: "Tierwesen",
+        title: "🐾 Tierwesen",
+        value: "Tierwesen",
         subraces: ["Katzenwesen", "Bärenwesen", "Hirschwesen"],
-        size: "M: 110-240 cm | F: 80-200 cm", minM: 1.10, maxM: 2.40, minF: 0.80, maxF: 2.00,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Geschärfte Instinkte.</p></div>`
+        size: "M: 110-240 cm | F: 80-200 cm",
+        minM: 1.10, maxM: 2.40, minF: 0.80, maxF: 2.00,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 60-120 Jahre. Enge Bindung an Instinkte.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Naturmagie, Tiermagie, geschärfte Sinne.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Instinktives Verhalten.</p></div>`
     },
     Halborc: {
-        title: "🛡️ Halborc", value: "Halborc",
+        title: "🛡️ Halborc",
+        value: "Halborc",
         subraces: ["Stadt-Halborc", "Stamm-Halborc"],
-        size: "M: 160-220 cm | F: 160-210 cm", minM: 1.60, maxM: 2.20, minF: 1.60, maxF: 2.10,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Mischung aus Kraft und Flexibilität.</p></div>`
+        size: "M: 160-220 cm | F: 160-210 cm",
+        minM: 1.60, maxM: 2.20, minF: 1.60, maxF: 2.10,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 50-80 Jahre. Verbindung von orkscher Kraft und menschlicher Flexibilität.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Blutmagie, Pragmatismus, Anpassungsfähigkeit.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Vorurteile.</p></div>`
     },
     Halbelf: {
-        title: "🏹 Halbelf", value: "Halbelf",
+        title: "🏹 Halbelf",
+        value: "Halbelf",
         subraces: ["Wald-Halbelf", "Stadt-Halbelf"],
-        size: "M: 150-210 cm | F: 150-195 cm", minM: 1.50, maxM: 2.10, minF: 1.50, maxF: 1.95,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Brückenbauer zwischen den Welten.</p></div>`
+        size: "M: 150-210 cm | F: 150-195 cm",
+        minM: 1.50, maxM: 2.10, minF: 1.50, maxF: 1.95,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebensdauer: 200-300 Jahre. Brückenbauer zwischen Menschen und Elfen.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Vielseitige Magie, diplomatisches Geschick.</p></div>
+            <div class="detail-box"><strong>⚠️ Schwächen</strong><p>Fühlen sich oft als Außenseiter.</p></div>`
     },
     Wargwandler: {
-        title: "🐺 Wargwandler", value: "Wargwandler",
+        title: "🐺 Wargwandler",
+        value: "Wargwandler",
         subraces: ["Nord-Raubtier", "Süd-Raubtier", "Grenzgänger"],
-        size: "200 - 240 cm (humanoid)", minM: 2.00, maxM: 2.40, minF: 1.80, maxF: 2.20,
-        content: `<div class="detail-box"><strong>Allgemeines</strong><p>Gestaltwandler ohne Magieaffinität.</p></div>`
+        size: "200 - 240 cm (humanoid)",
+        minM: 2.00, maxM: 2.40, minF: 1.80, maxF: 2.20,
+        content: `
+            <div class="detail-box"><strong>Allgemeines</strong><p>Lebenserwartung: 500-5000 Jahre. Tiergeborene Gestaltwandler.</p></div>
+            <div class="detail-box"><strong>💪 Stärken</strong><p>Gestaltwandlung, animalische Sinne, Selbstheilung.</p></div>
+            <div class="detail-box"><b>⚠️ Schwächen</b><p><b>Keine Magieaffinität</b> (Magie stürzt sie in Raserei).</p></div>`
     }
 };
 
