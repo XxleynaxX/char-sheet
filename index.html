@@ -489,7 +489,7 @@ textarea { min-height: 120px; resize: vertical; }
             </div>
 
             <div id="magicSection" class="field full" style="display: none; margin-top: 15px;">
-                <label>Elementarmagie & Schulen (Haken setzen – max. 2 + RP-Magie):</label>
+                <label>Elementarmagie & Schulen (Haken setzen – max. 2 + RP-/Sonder-Magie):</label>
                 <div class="checkbox-group">
                     <label class="checkbox-item"><input type="checkbox" value="Feuer" class="magic-check"> 🔥 Feuer</label>
                     <label class="checkbox-item"><input type="checkbox" value="Wasser" class="magic-check"> 💧 Wasser</label>
@@ -498,9 +498,11 @@ textarea { min-height: 120px; resize: vertical; }
                     <label class="checkbox-item"><input type="checkbox" value="Blitz" class="magic-check"> ⚡ Blitz</label>
                     <label class="checkbox-item"><input type="checkbox" value="Eis" class="magic-check"> ❄️ Eis</label>
                     <label class="checkbox-item"><input type="checkbox" value="Licht" class="magic-check"> ✨ Licht</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Schatten / Arkan" class="magic-check"> 🌙 Schatten / Arkan</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Schatten" class="magic-check"> 🌙 Schatten</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Arkan" class="magic-check"> 🔮 Arkan</label>
                     <label class="checkbox-item"><input type="checkbox" value="Blutmagie" class="magic-check"> 🩸 Blutmagie</label>
-                    <label class="checkbox-item"><input type="checkbox" value="Illusionsmagie" class="magic-check"> 🔮 Illusionsmagie</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Illusionsmagie" class="magic-check"> ✨ Illusionsmagie</label>
+                    <label class="checkbox-item"><input type="checkbox" value="Sonder-/RP-Magie" class="magic-check"> 🌟 Sonder-/RP-Magie</label>
                 </div>
 
                 <div class="field full" style="margin-top: 15px;">
@@ -1093,9 +1095,11 @@ const magicSchools = {
     blitz: { title: "⚡ Blitzmagie", source: "Stürme, Hitze", strengths: "Geschwindigkeit, Schock", weaknesses: "Muskelzucken, Herzrasen" },
     eis: { title: "❄️ Eismagie", source: "Frost, Kälte", strengths: "Einfrieren, Eisrüstungen", weaknesses: "Kältebrand, steife Glieder" },
     licht: { title: "✨ Lichtmagie", source: "Sonnenlicht", strengths: "Blenden, Segnung", weaknesses: "Augenschmerzen, Lichtempfindlichkeit" },
-    schatten: { title: "🌙 Schatten / Arkan", source: "Dunkelheit", strengths: "Tarnung, Illusionen", weaknesses: "Lichtempfindlichkeit, Albträume" },
+    schatten: { title: "🌙 Schattenmagie", source: "Dunkelheit", strengths: "Tarnung, Schattenreisen", weaknesses: "Lichtempfindlichkeit, Albträume" },
+    arkan: { title: "🔮 Arkanmagie", source: "Arkane Energie / Mana", strengths: "Vielseitige Zauber, Energieformung", weaknesses: "Manaerschöpfung, instabile Effekte" },
     blut: { title: "🩸 Blutmagie", source: "Frischblut", strengths: "Körperverstärkung", weaknesses: "Eigenblutverlust, Schwäche" },
-    illusion: { title: "🔮 Illusionsmagie", source: "Geistige Energie", strengths: "Trugbilder", weaknesses: "Migräne, Konzentrationsverlust" }
+    illusion: { title: "✨ Illusionsmagie", source: "Geistige Energie", strengths: "Trugbilder", weaknesses: "Migräne, Konzentrationsverlust" },
+    sonder: { title: "🌟 Sonder-/RP-Magie", source: "Je nach Art (frei wählbar)", strengths: "Individuell, rein RP-basiert", weaknesses: "Nach Absprache / Charakterhintergrund" }
 };
 
 const jobs = {
@@ -1568,8 +1572,13 @@ function applyCharacterData(data) {
     magicRulesAccepted = !!data.magicRulesAccepted;
     verifiedUsername = data.verifiedUsername || "";
     if (data.magicSchools && Array.isArray(data.magicSchools)) {
+        // Legacy-Support: altes "Schatten / Arkan" in separate Checkboxen aufteilen
+        const schools = data.magicSchools.map(s => {
+            if (s === "Schatten / Arkan") return ["Schatten", "Arkan"];
+            return s;
+        }).flat();
         document.querySelectorAll(".magic-check").forEach(cb => {
-            if (data.magicSchools.includes(cb.value)) cb.checked = true;
+            if (schools.includes(cb.value)) cb.checked = true;
         });
     }
     document.getElementById("magicDetailsInput").value = data.magicDetails || "";
