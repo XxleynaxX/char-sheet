@@ -30,5 +30,5 @@ Since this is a pure **single-file web application** (HTML with embedded CSS & J
 ## 📦 Project Structure
 
 ```text
-├── index.html    # Contains the complete logic, styles, and templates
-└── README.md     # Project documentation
+├── Char Bogen_56.html    # Core application: Combines HTML structure, responsive dark-fantasy CSS styling, and complete JavaScript control (JSON export, LocalStorage, html2canvas image generation)
+└── README.md     # Project documentation and guide
