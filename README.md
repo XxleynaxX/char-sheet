@@ -1,34 +1,85 @@
-# 🛡️ Chronicles – Digital Character Sheet
+# 🛡️ Chroniken – Rollenspiel-Website
 
-A modern, web-based character sheet specifically designed for roleplay projects and servers (such as Conan Exiles). This web app allows players to create detailed characters, save them locally, export/import them via JSON, and download the entire character sheet directly as a polished PNG image.
+Was als **digitaler Charakterbogen** begann, ist zu einer **kompletten Webseite fürs Rollenspiel** gewachsen: Portal, Wiki, Kalender, Events, Götter, Kreaturen und mehr – alles im Browser, ohne Server.
 
----
-
-## ✨ Features
-
-- **👤 General Info & Races:** Comprehensive race and subrace selection with automatic height verification (including warning and confirmation popups for deviations).
-- **✨ Magic & Rules:** Optional magic proficiency with element selection, sources, and side effects, including mandatory confirmation of server magic rules via a modal popup.
-- **🛠️ Professions & Crafting:** Selection of main and secondary professions with detailed descriptions.
-- **👁️ Appearance & Features:** Dedicated fields for hair, eye color, and individual build/distinct feature descriptions.
-- **⚖️ Alignment & Moral:** Character alignment classification from "Very Good" to "Evil".
-- **🔒 OOC Safety Info:** Integrated OOC consent for restraints & enslavement as well as real-life phobias/boundaries to protect players.
-- **💾 JSON Import & Export:** Save and load complete character files as well as automatic browser local storage backup (`LocalStorage`).
-- **🖼️ Direct Image Export:** Automatically generates a sharp PNG screenshot of the complete character sheet in a sleek dark fantasy design using `html2canvas`.
+Der Charakterbogen bleibt das Herzstück; darum herum entstand das **Chroniken**-Portal.
 
 ---
 
-## 🚀 Quick Start & Usage
+## ✨ Was die Website bietet
 
-Since this is a pure **single-file web application** (HTML with embedded CSS & JavaScript), you don't need any server or Node.js dependencies!
+### Aus dem Charakterbogen
+- **👤 Allgemeine Daten & Völker** – Völker, Unterrassen, Größenprüfung inkl. Warnung bei Abweichungen
+- **✨ Magie & Regeln** – optionale Magie, Bestätigung der Server-Magieregeln
+- **🛠️ Berufe & Handwerk** – Haupt- und Nebenberuf
+- **👁️ Aussehen & Merkmale** – Haare, Augen, besondere Merkmale
+- **⚖️ Gesinnung** – von „Sehr gut“ bis „Böse“
+- **🔒 OOC-Sicherheit** – Grenzen, Phobien, sensible Themen
+- **🎂 Ingame-Geburtstag** – Berechnung und Anzeige im Kalender / bei Events
+- **💾 JSON Import & Export** – plus automatische Sicherung im Browser (`localStorage`)
+- **🖼️ PNG-Export** – fertiger Charakterbogen als Bild (`html2canvas`)
 
-1. Download the `.html` file (or clone the repository).
-2. Simply open the file with a double-click in any modern web browser (Chrome, Firefox, Edge, Safari).
-3. Fill out your character sheet and click **"Complete character & save as image"**.
+### Als Website ergänzt
+- **Startportal** mit Live-News und Bereichen
+- **Wiki** und **Bibliothek** (eigene Passwörter zum Schreiben)
+- **Events** und **News**
+- **Ingame-Kalender** (15 reale Tage = 1 Monat, ab Frostmond 1400)
+- **Götter & Kulte**, **Kreaturen**, **Berufe**, **Regeln**
+- Einheitliches dunkles Design, Navigation, © Kiyasha
 
 ---
 
-## 📦 Project Structure
+## 🚀 Schnellstart
+
+Reine **Client-Web-App** – kein Node.js, kein Backend nötig.
+
+1. Ordner entpacken.
+2. `index.html` im Browser öffnen (oder direkt `charakterbogen.html`).
+3. Charakter ausfüllen, speichern, JSON oder PNG exportieren – oder die anderen Bereiche der Website nutzen.
 
 ```text
-├── index.html    # Core application: Combines HTML structure, responsive dark-fantasy CSS styling, and complete JavaScript control (JSON export, LocalStorage, html2canvas image generation)
-└── README.md     # Project documentation and guide
+portal-website/
+├── index.html            # Portal-Start
+├── charakterbogen.html   # Digitaler Charakterbogen (Ursprung)
+├── kalender.html         # Ingame-Kalender
+├── events.html           # Events & Geburtstage
+├── wiki.html / bibliothek.html / …
+├── style.css
+└── README.md
+```
+
+---
+
+## 📅 Ingame-Zeitrechnung
+
+| Real | Ingame |
+|------|--------|
+| 1 realer Tag | 2 Ingame-Tage |
+| 15 reale Tage | 1 Monat (30 Ingame-Tage) |
+| 12 Monate | 1 Jahr |
+| **Start** | **17.10.2026** = **1. Frostmond 1400** |
+
+---
+
+## 🔐 Schreibrechte (Portal)
+
+| Bereich | Passwort (Standard) |
+|---------|---------------------|
+| Wiki, Events, Regeln, Götter, Berufe, Kreaturen | `portal123` |
+| Bibliothek | `bibliothek456` |
+
+Nur clientseitig – für echte Sicherheit später einen Server einplanen.
+
+---
+
+## 💡 Kurz gesagt
+
+- **Früher:** ein einzelner Charakterbogen als HTML-Datei  
+- **Jetzt:** eine kleine Rollenspiel-Website mit Charakterbogen, Kalender, Lore und Tools  
+- Daten bleiben im **Browser** (localStorage); PNG/JSON zum Mitnehmen  
+
+---
+
+## 📄 Copyright
+
+© Kiyasha · Chroniken
