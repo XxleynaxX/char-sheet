@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News – Chroniken</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-overlay"></div>
+    <header>
+    <div class="logo-wrap">
+      <div class="logo">Chroniken</div>
+    </div>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="news.html" class="active">News</a>
+      <a href="events.html">Events</a>
+      <a href="kalender.html">Kalender</a>
+      <a href="wiki.html">Wiki</a>
+      <a href="bibliothek.html">Bibliothek</a>
+      <a href="berufe.html">Berufe</a>
+      <a href="kreaturen.html">Kreaturen</a>
+      <a href="regeln.html">Regeln</a>
+      <a href="goetter.html">Götter</a>
+      <a href="charakterbogen.html">Charakterbogen</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">News</h1>
+    <p class="page-desc">Aktuelle Meldungen aus dem Event-Bereich und dem Portal.</p>
+
+    <div id="newsList"></div>
+    <div class="empty" id="emptyState" style="display:none;">
+      Noch keine News.<br>
+      Events, die als „In News anzeigen“ markiert sind, erscheinen hier automatisch.
+      <br><br>
+      <a href="events.html" class="btn" style="display:inline-block;text-decoration:none;">Zu den Events →</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© Kiyasha</p>
+  </footer>
+
+  <script>
+    const EVENTS_KEY = "portal_events";
+
+    function loadEvents() {
+      try { return JSON.parse(localStorage.getItem(EVENTS_KEY)) || []; }
+      catch { return []; }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function render() {
+      const events = loadEvents()
+        .filter(e => e.showInNews)
+        .sort((a, b) => b.updated - a.updated);
+
+      const list = document.getElementById("newsList");
+      const empty = document.getElementById("emptyState");
+      list.innerHTML = "";
+
+      if (events.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+      empty.style.display = "none";
+
+      events.forEach(e => {
+        const card = document.createElement("div");
+        card.className = "card";
+        const dateLine = e.date
+          ? `<div class="topic-meta" style="margin-bottom:0.6rem;">📅 ${escapeHtml(e.date)}</div>`
+          : `<div class="topic-meta" style="margin-bottom:0.6rem;">Aktualisiert: ${new Date(e.updated).toLocaleString("de-DE")}</div>`;
+        card.innerHTML = `
+          <h3 style="margin-bottom:0.3rem;">${escapeHtml(e.title)}</h3>
+          ${dateLine}
+          <div class="topic-content" style="white-space:pre-wrap;">${escapeHtml(e.content)}</div>
+          <p style="margin-top:1rem;">
+            <a href="events.html" style="color:var(--purple-bright);font-size:0.9rem;">→ Zum Event-Bereich</a>
+          </p>`;
+        list.appendChild(card);
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>

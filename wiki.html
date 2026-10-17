@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiki – Chroniken</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-overlay"></div>
+    <header>
+    <div class="logo-wrap">
+      <div class="logo">Chroniken</div>
+    </div>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="news.html">News</a>
+      <a href="events.html">Events</a>
+      <a href="kalender.html">Kalender</a>
+      <a href="wiki.html" class="active">Wiki</a>
+      <a href="bibliothek.html">Bibliothek</a>
+      <a href="berufe.html">Berufe</a>
+      <a href="kreaturen.html">Kreaturen</a>
+      <a href="regeln.html">Regeln</a>
+      <a href="goetter.html">Götter</a>
+      <a href="charakterbogen.html">Charakterbogen</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">Wiki</h1>
+    <p class="page-desc">Sammle Wissen, erstelle eigene Themen und teile sie. Schreiben ist nur mit Passwort möglich.</p>
+
+    <div class="wiki-controls">
+      <button class="btn" id="btnUnlock">🔓 Schreiben freischalten</button>
+      <button class="btn secondary" id="btnNewTopic" style="display:none;">+ Neues Thema</button>
+      <button class="btn secondary" id="btnLock" style="display:none;">🔒 Sperren</button>
+      <span class="status" id="status">Schreibmodus: gesperrt</span>
+    </div>
+
+    <!-- Liste der Themen -->
+    <div id="listView">
+      <ul class="topic-list" id="topicList"></ul>
+      <div class="empty" id="emptyState" style="display:none;">
+        Noch keine Themen vorhanden.<br>
+        Schalte den Schreibmodus frei und erstelle das erste Thema.
+      </div>
+    </div>
+
+    <!-- Einzelnes Thema anzeigen -->
+    <div id="viewTopic" style="display:none;">
+      <div class="card">
+        <h2 id="viewTitle"></h2>
+        <div class="topic-meta" id="viewMeta"></div>
+        <div class="topic-content" id="viewContent"></div>
+        <div class="topic-actions" id="viewActions" style="display:none;">
+          <button class="btn" id="btnEdit">Bearbeiten</button>
+          <button class="btn danger" id="btnDelete">Löschen</button>
+        </div>
+        <button class="btn secondary" id="btnBack" style="margin-top:1rem;">← Zurück zur Liste</button>
+      </div>
+    </div>
+
+    <!-- Editor (Neu / Bearbeiten) -->
+    <div class="editor-area" id="editorArea">
+      <div class="card">
+        <h3 id="editorTitle">Neues Thema</h3>
+        <div class="form-group">
+          <label for="inputTitle">Titel</label>
+          <input type="text" id="inputTitle" placeholder="Thema-Titel...">
+        </div>
+        <div class="form-group">
+          <label for="inputContent">Inhalt</label>
+          <textarea id="inputContent" placeholder="Schreibe hier deinen Text..."></textarea>
+        </div>
+        <div style="display:flex; gap:0.8rem;">
+          <button class="btn" id="btnSave">Speichern</button>
+          <button class="btn secondary" id="btnCancel">Abbrechen</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Passwort Modal -->
+  <div class="modal-overlay" id="pwModal">
+    <div class="modal">
+      <h3>Schreibmodus freischalten</h3>
+      <p style="color:var(--text-muted); margin-bottom:1rem; font-size:0.9rem;">
+        Passwort eingeben, um Themen zu erstellen und zu bearbeiten.
+      </p>
+      <div class="form-group">
+        <input type="password" id="pwInput" placeholder="Passwort..." autocomplete="off">
+      </div>
+      <div class="modal-actions">
+        <button class="btn" id="pwConfirm">Freischalten</button>
+        <button class="btn secondary" id="pwCancel">Abbrechen</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© Kiyasha</p>
+  </footer>
+
+  <script>
+    // ===== Konfiguration =====
+    const PASSWORD = "portal123";          // <-- hier Passwort ändern
+    const STORAGE_KEY = "portal_wiki_topics";
+
+    // ===== State =====
+    let unlocked = false;
+    let editingId = null;                  // null = neues Thema
+
+    // ===== DOM =====
+    const topicList   = document.getElementById("topicList");
+    const emptyState  = document.getElementById("emptyState");
+    const listView    = document.getElementById("listView");
+    const viewTopic   = document.getElementById("viewTopic");
+    const editorArea  = document.getElementById("editorArea");
+    const statusEl    = document.getElementById("status");
+    const btnUnlock   = document.getElementById("btnUnlock");
+    const btnNewTopic = document.getElementById("btnNewTopic");
+    const btnLock     = document.getElementById("btnLock");
+    const pwModal     = document.getElementById("pwModal");
+    const pwInput     = document.getElementById("pwInput");
+
+    // ===== Storage =====
+    function loadTopics() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveTopics(topics) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(topics));
+    }
+
+    // ===== Render Liste =====
+    function renderList() {
+      const topics = loadTopics().sort((a, b) => b.updated - a.updated);
+      topicList.innerHTML = "";
+
+      if (topics.length === 0) {
+        emptyState.style.display = "block";
+        return;
+      }
+      emptyState.style.display = "none";
+
+      topics.forEach(t => {
+        const li = document.createElement("li");
+        const date = new Date(t.updated).toLocaleString("de-DE");
+        li.innerHTML = `
+          <a href="#" data-id="${t.id}">
+            <strong>${escapeHtml(t.title)}</strong>
+            <div class="topic-meta">Zuletzt geändert: ${date}</div>
+          </a>`;
+        li.querySelector("a").addEventListener("click", e => {
+          e.preventDefault();
+          showTopic(t.id);
+        });
+        topicList.appendChild(li);
+      });
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    // ===== Thema anzeigen =====
+    function showTopic(id) {
+      const topics = loadTopics();
+      const t = topics.find(x => x.id === id);
+      if (!t) return;
+
+      document.getElementById("viewTitle").textContent = t.title;
+      document.getElementById("viewMeta").textContent =
+        "Zuletzt geändert: " + new Date(t.updated).toLocaleString("de-DE");
+      document.getElementById("viewContent").textContent = t.content;
+
+      const actions = document.getElementById("viewActions");
+      actions.style.display = unlocked ? "flex" : "none";
+
+      listView.style.display = "none";
+      editorArea.classList.remove("visible");
+      viewTopic.style.display = "block";
+
+      // Edit / Delete Buttons
+      document.getElementById("btnEdit").onclick = () => openEditor(t);
+      document.getElementById("btnDelete").onclick = () => {
+        if (confirm("Thema wirklich löschen?")) {
+          const filtered = topics.filter(x => x.id !== id);
+          saveTopics(filtered);
+          showList();
+        }
+      };
+    }
+
+    function showList() {
+      viewTopic.style.display = "none";
+      editorArea.classList.remove("visible");
+      listView.style.display = "block";
+      renderList();
+    }
+
+    // ===== Editor =====
+    function openEditor(topic = null) {
+      editingId = topic ? topic.id : null;
+      document.getElementById("editorTitle").textContent =
+        topic ? "Thema bearbeiten" : "Neues Thema";
+      document.getElementById("inputTitle").value = topic ? topic.title : "";
+      document.getElementById("inputContent").value = topic ? topic.content : "";
+
+      listView.style.display = "none";
+      viewTopic.style.display = "none";
+      editorArea.classList.add("visible");
+      document.getElementById("inputTitle").focus();
+    }
+
+    function saveTopic() {
+      const title = document.getElementById("inputTitle").value.trim();
+      const content = document.getElementById("inputContent").value.trim();
+
+      if (!title) {
+        alert("Bitte einen Titel eingeben.");
+        return;
+      }
+
+      const topics = loadTopics();
+      const now = Date.now();
+
+      if (editingId) {
+        const t = topics.find(x => x.id === editingId);
+        if (t) {
+          t.title = title;
+          t.content = content;
+          t.updated = now;
+        }
+      } else {
+        topics.push({
+          id: "t_" + now + "_" + Math.random().toString(36).slice(2, 7),
+          title,
+          content,
+          created: now,
+          updated: now
+        });
+      }
+
+      saveTopics(topics);
+      showList();
+    }
+
+    // ===== Unlock / Lock =====
+    function setUnlocked(state) {
+      unlocked = state;
+      statusEl.textContent = state ? "Schreibmodus: freigeschaltet" : "Schreibmodus: gesperrt";
+      statusEl.classList.toggle("unlocked", state);
+      btnUnlock.style.display = state ? "none" : "inline-block";
+      btnNewTopic.style.display = state ? "inline-block" : "none";
+      btnLock.style.display = state ? "inline-block" : "none";
+    }
+
+    // ===== Events =====
+    btnUnlock.addEventListener("click", () => {
+      pwModal.classList.add("open");
+      pwInput.value = "";
+      pwInput.focus();
+    });
+
+    document.getElementById("pwCancel").addEventListener("click", () => {
+      pwModal.classList.remove("open");
+    });
+
+    document.getElementById("pwConfirm").addEventListener("click", () => {
+      if (pwInput.value === PASSWORD) {
+        setUnlocked(true);
+        pwModal.classList.remove("open");
+      } else {
+        alert("Falsches Passwort.");
+        pwInput.value = "";
+        pwInput.focus();
+      }
+    });
+
+    pwInput.addEventListener("keydown", e => {
+      if (e.key === "Enter") document.getElementById("pwConfirm").click();
+    });
+
+    btnLock.addEventListener("click", () => setUnlocked(false));
+    btnNewTopic.addEventListener("click", () => openEditor());
+    document.getElementById("btnSave").addEventListener("click", saveTopic);
+    document.getElementById("btnCancel").addEventListener("click", showList);
+    document.getElementById("btnBack").addEventListener("click", showList);
+
+    // ===== Init =====
+    renderList();
+  </script>
+</body>
+</html>
