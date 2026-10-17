@@ -61,16 +61,6 @@ portal-website/
 
 ---
 
-## 🔐 Schreibrechte (Portal)
-
-| Bereich | Passwort (Standard) |
-|---------|---------------------|
-| Wiki, Events, Regeln, Götter, Berufe, Kreaturen | `portal123` |
-| Bibliothek | `bibliothek456` |
-
-Nur clientseitig – für echte Sicherheit später einen Server einplanen.
-
----
 
 ## 💡 Kurz gesagt
 
