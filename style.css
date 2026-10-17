@@ -5,9 +5,9 @@
   --bg-card: #1a1a1f;
   --bg-hover: #222228;
   --bg-input: #121216;
-  --accent: #4a9eff;
-  --accent-dim: #2d6cb5;
-  --accent-soft: #6bb0ff;
+  --accent: #a855f7;
+  --accent-dim: #7c3aed;
+  --accent-soft: #c084fc;
   --text: #e4e4e8;
   --text-muted: #9a9aa3;
   --border: #2a2a32;
@@ -18,7 +18,7 @@
   --purple: var(--accent);
   --purple-bright: var(--accent-soft);
   --purple-dim: var(--accent-dim);
-  --purple-dark: #1e4a7a;
+  --purple-dark: #5b21b6;
 }
 
 * {
@@ -69,17 +69,17 @@ header,
   padding: 1.6rem 1rem 1.1rem;
   border-bottom: 1px solid var(--border);
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(74, 158, 255, 0.08) 0%, transparent 60%);
+    radial-gradient(ellipse at 50% 0%, rgba(168, 85, 247, 0.08) 0%, transparent 60%);
 }
 
 .logo {
   font-size: 1.85rem;
   font-weight: 700;
-  color: #8eb8e8;
+  color: #c084fc;
   letter-spacing: 0.35em;
   text-transform: uppercase;
   text-shadow:
-    0 0 20px rgba(74, 158, 255, 0.35),
+    0 0 20px rgba(168, 85, 247, 0.35),
     0 2px 4px rgba(0,0,0,0.5);
   display: inline-block;
 }
@@ -100,7 +100,7 @@ nav {
   justify-content: center;
   width: 100%;
   background: #141418;
-  border-bottom: 2px solid #2a5a8f;
+  border-bottom: 2px solid #6d3ba8;
 }
 
 nav a {
@@ -121,7 +121,7 @@ nav a:first-child {
 nav a:hover,
 nav a.active {
   color: #fff;
-  background: rgba(74, 158, 255, 0.12);
+  background: rgba(168, 85, 247, 0.12);
   box-shadow: inset 0 -2px 0 var(--accent);
 }
 
@@ -259,7 +259,7 @@ main {
 .btn.secondary:hover {
   border-color: var(--accent);
   color: var(--accent-soft);
-  background: rgba(74, 158, 255, 0.08);
+  background: rgba(168, 85, 247, 0.08);
 }
 
 .btn.danger {
@@ -341,7 +341,7 @@ textarea:focus,
 select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.15);
 }
 
 textarea {
@@ -411,7 +411,7 @@ textarea {
 
 .god-card:hover {
   border-color: var(--accent-dim);
-  box-shadow: 0 0 16px rgba(74, 158, 255, 0.1);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.1);
 }
 
 .god-card h3 {

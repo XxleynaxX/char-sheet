@@ -24,7 +24,7 @@ button, select, input, textarea { font-family: inherit; }
     background: transparent;
     border-bottom: none;
 }
-.header h1 { margin: 0; color: #8eb8e8; font-size: 22px; font-weight: 600; letter-spacing: 0.05em; }
+.header h1 { margin: 0; color: #c084fc; font-size: 22px; font-weight: 600; letter-spacing: 0.05em; }
 .header p { margin: 6px 0 0; color: #9a9aa3; font-size: 14px; }
 
 .container { width: min(1000px, 92%); margin: 35px auto; }
@@ -39,15 +39,15 @@ button, select, input, textarea { font-family: inherit; }
     margin-bottom: 20px;
     box-shadow: 0 10px 35px rgba(0,0,0,0.35);
 }
-.card h2 { margin-top: 0; color: #8eb8e8; }
-.card h3 { color: #b8cce0; }
+.card h2 { margin-top: 0; color: #c084fc; }
+.card h3 { color: #e4cfff; }
 
 .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
 .field { display: flex; flex-direction: column; gap: 7px; }
 .field.full { grid-column: 1 / -1; }
 
 label { color: #ddd; font-weight: bold; }
-.info-note { font-size: 13px; color: #6bb0ff; font-weight: normal; margin-left: 6px; }
+.info-note { font-size: 13px; color: #c084fc; font-weight: normal; margin-left: 6px; }
 
 input[type="text"], input[type="number"], select, textarea {
     width: 100%;
@@ -59,8 +59,8 @@ input[type="text"], input[type="number"], select, textarea {
     outline: none;
 }
 input:focus, select:focus, textarea:focus {
-    border-color: #6bb0ff;
-    box-shadow: 0 0 10px rgba(74,158,255,0.2);
+    border-color: #c084fc;
+    box-shadow: 0 0 10px rgba(168,85,247,0.2);
 }
 textarea { min-height: 120px; resize: vertical; }
 
@@ -78,7 +78,7 @@ textarea { min-height: 120px; resize: vertical; }
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #b8cce0;
+    color: #e4cfff;
     cursor: pointer;
     background: #1a1a1f;
     padding: 6px 12px;
@@ -88,7 +88,7 @@ textarea { min-height: 120px; resize: vertical; }
 .checkbox-item input[type="checkbox"] {
     width: 18px;
     height: 18px;
-    accent-color: #4a9eff;
+    accent-color: #a855f7;
     cursor: pointer;
 }
 
@@ -99,22 +99,22 @@ textarea { min-height: 120px; resize: vertical; }
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    border: 1px solid #4a9eff;
+    border: 1px solid #a855f7;
     background: #1a1a1f;
-    color: #b8cce0;
+    color: #e4cfff;
     cursor: pointer;
     margin-left: 5px;
     font-weight: bold;
 }
-.info-button:hover { background: #2d6cb5; color: white; }
+.info-button:hover { background: #7c3aed; color: white; }
 
 .magic-rules-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #1a2a3d;
-    border: 1px solid #4a9eff;
-    color: #b8cce0;
+    background: #2a1741;
+    border: 1px solid #a855f7;
+    color: #e4cfff;
     padding: 6px 12px;
     border-radius: 8px;
     cursor: pointer;
@@ -122,7 +122,7 @@ textarea { min-height: 120px; resize: vertical; }
     margin-left: 10px;
     font-weight: normal;
 }
-.magic-rules-btn:hover { background: #2d6cb5; }
+.magic-rules-btn:hover { background: #7c3aed; }
 
 /* MODALS */
 .modal-overlay {
@@ -136,7 +136,7 @@ textarea { min-height: 120px; resize: vertical; }
 }
 .modal-content {
     background: #1a1a1f;
-    border: 2px solid #4a9eff;
+    border: 2px solid #a855f7;
     border-radius: 8px;
     width: min(650px, 90%);
     max-height: 85vh;
@@ -150,7 +150,7 @@ textarea { min-height: 120px; resize: vertical; }
     border-bottom: 1px solid #2a2a32;
     border-top-left-radius: 13px;
     border-top-right-radius: 13px;
-    color: #8eb8e8;
+    color: #c084fc;
     font-size: 20px;
     font-weight: bold;
 }
@@ -179,7 +179,7 @@ textarea { min-height: 120px; resize: vertical; }
     border: none;
     border-radius: 10px;
     padding: 15px;
-    background: linear-gradient(135deg, #2d6cb5, #4a9eff);
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
     color: white;
     font-size: 17px;
     font-weight: bold;
@@ -193,7 +193,7 @@ textarea { min-height: 120px; resize: vertical; }
     border-radius: 10px;
     padding: 15px;
     background: #1a1a1f;
-    color: #b8cce0;
+    color: #e4cfff;
     font-size: 17px;
     font-weight: bold;
     cursor: pointer;
@@ -203,7 +203,7 @@ textarea { min-height: 120px; resize: vertical; }
 .back-button {
     border: 1px solid #3a3a45;
     background: #1a1a1f;
-    color: #b8cce0;
+    color: #e4cfff;
     border-radius: 9px;
     padding: 11px 16px;
     cursor: pointer;
@@ -222,7 +222,7 @@ textarea { min-height: 120px; resize: vertical; }
 .info-item.clickable { cursor: pointer; }
 .info-item.clickable:hover {
     transform: translateY(-3px);
-    border-color: #4a9eff;
+    border-color: #a855f7;
     background: #222228;
 }
 .info-item h3 { margin-top: 0; }
@@ -235,7 +235,7 @@ textarea { min-height: 120px; resize: vertical; }
     color: #ddd !important;
 }
 .job-subtext {
-    color: #8eb8e8;
+    color: #c084fc;
     font-style: italic;
     font-weight: bold;
     margin-bottom: 5px;
@@ -248,7 +248,7 @@ textarea { min-height: 120px; resize: vertical; }
     padding: 18px;
     margin-top: 15px;
 }
-.detail-box strong { color: #8eb8e8; }
+.detail-box strong { color: #c084fc; }
 
 .success {
     text-align: center;
@@ -267,10 +267,10 @@ textarea { min-height: 120px; resize: vertical; }
     padding: 40px;
     background: radial-gradient(circle at top, #1a1a22 0%, #121216 60%, #0e0e10 100%);
     color: #e2d7f5;
-    border: 3px solid #4a9eff;
+    border: 3px solid #a855f7;
     border-radius: 20px;
     position: relative;
-    box-shadow: inset 0 0 50px rgba(74, 158, 255, 0.15);
+    box-shadow: inset 0 0 50px rgba(168, 85, 247, 0.15);
 }
 .img-header-title { text-align: center; margin-bottom: 22px; }
 .img-header-title h1 {
@@ -278,10 +278,10 @@ textarea { min-height: 120px; resize: vertical; }
     font-size: 40px;
     margin: 0;
     letter-spacing: 2px;
-    text-shadow: 0 0 15px rgba(74, 158, 255, 0.4);
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
 }
 .img-header-title p {
-    color: #6bb0ff;
+    color: #c084fc;
     margin: 6px 0 0;
     font-size: 14px;
     text-transform: uppercase;
@@ -301,7 +301,7 @@ textarea { min-height: 120px; resize: vertical; }
 }
 .img-box.full-width { grid-column: 1 / -1; }
 .img-box-title {
-    color: #b8cce0;
+    color: #e4cfff;
     font-size: 15px;
     font-weight: bold;
     text-transform: uppercase;
@@ -318,11 +318,11 @@ textarea { min-height: 120px; resize: vertical; }
     margin-bottom: 7px;
     font-size: 14px;
 }
-.img-field-label { color: #6bb0ff; font-weight: bold; }
+.img-field-label { color: #c084fc; font-weight: bold; }
 .img-badge {
     display: inline-block;
-    background: #1a2a3d;
-    border: 1px solid #4a9eff;
+    background: #2a1741;
+    border: 1px solid #a855f7;
     color: #e4e4e8;
     padding: 3px 9px;
     border-radius: 6px;
@@ -354,7 +354,7 @@ textarea { min-height: 120px; resize: vertical; }
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    color: #6a8aaa;
+    color: #a89cc8;
 }
 
 @media(max-width: 700px) {
@@ -365,10 +365,10 @@ textarea { min-height: 120px; resize: vertical; }
 <body>
 <!-- CHRONIKEN NAV -->
 <header style="background:linear-gradient(180deg,#121216 0%,#0e0e12 100%);border-bottom:1px solid #2a2a32;position:sticky;top:0;z-index:100;">
-  <div style="width:100%;text-align:center;padding:1.5rem 1rem 1rem;border-bottom:1px solid #2a2a32;background:radial-gradient(ellipse at 50% 0%,rgba(74,158,255,0.08) 0%,transparent 60%);">
-    <a href="index.html" style="color:#8eb8e8;text-decoration:none;font-weight:700;letter-spacing:0.35em;font-size:1.7rem;text-transform:uppercase;text-shadow:0 0 20px rgba(74,158,255,0.35);">✦ Chroniken ✦</a>
+  <div style="width:100%;text-align:center;padding:1.5rem 1rem 1rem;border-bottom:1px solid #2a2a32;background:radial-gradient(ellipse at 50% 0%,rgba(168,85,247,0.08) 0%,transparent 60%);">
+    <a href="index.html" style="color:#c084fc;text-decoration:none;font-weight:700;letter-spacing:0.35em;font-size:1.7rem;text-transform:uppercase;text-shadow:0 0 20px rgba(168,85,247,0.35);">✦ Chroniken ✦</a>
   </div>
-  <nav style="display:flex;flex-wrap:wrap;justify-content:center;background:#141418;border-bottom:2px solid #2a5a8f;">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;background:#141418;border-bottom:2px solid #6d3ba8;">
     <a href="index.html" style="color:#9a9aa3;text-decoration:none;font-size:0.88rem;padding:0.7rem 1rem;border-right:1px solid #2a2a32;">Start</a>
     <a href="news.html" style="color:#9a9aa3;text-decoration:none;font-size:0.88rem;padding:0.7rem 1rem;border-right:1px solid #2a2a32;">News</a>
     <a href="events.html" style="color:#9a9aa3;text-decoration:none;font-size:0.88rem;padding:0.7rem 1rem;border-right:1px solid #2a2a32;">Events</a>
@@ -379,7 +379,7 @@ textarea { min-height: 120px; resize: vertical; }
     <a href="kreaturen.html" style="color:#9a9aa3;text-decoration:none;font-size:0.88rem;padding:0.7rem 1rem;border-right:1px solid #2a2a32;">Kreaturen</a>
     <a href="regeln.html" style="color:#9a9aa3;text-decoration:none;font-size:0.88rem;padding:0.7rem 1rem;border-right:1px solid #2a2a32;">Regeln</a>
     <a href="goetter.html" style="color:#9a9aa3;text-decoration:none;font-size:0.88rem;padding:0.7rem 1rem;border-right:1px solid #2a2a32;">Götter</a>
-    <a href="charakterbogen.html" style="color:#fff;text-decoration:none;font-size:0.88rem;padding:0.7rem 1rem;border-right:1px solid #2a2a32;background:rgba(74,158,255,0.12);box-shadow:inset 0 -2px 0 #4a9eff;">Charakterbogen</a>
+    <a href="charakterbogen.html" style="color:#fff;text-decoration:none;font-size:0.88rem;padding:0.7rem 1rem;border-right:1px solid #2a2a32;background:rgba(168,85,247,0.12);box-shadow:inset 0 -2px 0 #a855f7;">Charakterbogen</a>
   </nav>
 </header>
 
@@ -438,11 +438,11 @@ textarea { min-height: 120px; resize: vertical; }
                     <label>🎂 Geburtstag (Ingame-Kalender)</label>
                     <div style="display: grid; grid-template-columns: 90px 1fr 110px; gap: 10px;">
                         <div>
-                            <label style="font-size: 12px; color: #6bb0ff;">Tag</label>
+                            <label style="font-size: 12px; color: #c084fc;">Tag</label>
                             <input id="birthdayDay" type="number" min="1" max="30" placeholder="1–30" style="width: 100%;" oninput="updateAgeFromBirthday()">
                         </div>
                         <div>
-                            <label style="font-size: 12px; color: #6bb0ff;">Monat</label>
+                            <label style="font-size: 12px; color: #c084fc;">Monat</label>
                             <select id="birthdayMonth" style="width: 100%;" onchange="updateAgeFromBirthday()">
                                 <option value="">– Monat wählen –</option>
                                 <option value="0">1. Frostmond</option>
@@ -460,12 +460,12 @@ textarea { min-height: 120px; resize: vertical; }
                             </select>
                         </div>
                         <div>
-                            <label style="font-size: 12px; color: #6bb0ff;">Geburtsjahr</label>
+                            <label style="font-size: 12px; color: #c084fc;">Geburtsjahr</label>
                             <input id="birthdayYear" type="number" min="1" max="2000" placeholder="z.B. 1375" style="width: 100%;" oninput="updateAgeFromBirthday()">
                         </div>
                     </div>
-                    <div id="ageCalcInfo" style="margin-top: 8px; font-size: 0.9rem; color: #8eb8e8;"></div>
-                    <small style="color: #6a8aaa; margin-top: 6px; display: block;">
+                    <div id="ageCalcInfo" style="margin-top: 8px; font-size: 0.9rem; color: #c084fc;"></div>
+                    <small style="color: #a89cc8; margin-top: 6px; display: block;">
                         Rechnung: 1 Monat = 15 reale Tage · 1 realer Tag = 2 Ingame-Tage · 30 Tage pro Monat.<br>
                         Das Alter wird automatisch aus dem aktuellen Ingame-Datum berechnet und ins Altersfeld geschrieben. Wird im Kalender &amp; Events angezeigt.
                     </small>
@@ -522,7 +522,7 @@ textarea { min-height: 120px; resize: vertical; }
                     🐾 Beherrscht Verwandlung / Gestaltwandel?
                 </label>
                 <div id="transformFieldContainer" style="display: none; margin-top: 10px;">
-                    <label style="font-size: 13px; color: #8eb8e8;">Details zur Verwandlung (Formen, Voraussetzungen, Auswirkungen):</label>
+                    <label style="font-size: 13px; color: #c084fc;">Details zur Verwandlung (Formen, Voraussetzungen, Auswirkungen):</label>
                     <textarea id="transformInput" style="min-height: 80px;" placeholder="z. B. Werwolfform bei Vollmond, Fuchsform, Voraussetzungen und was dabei passiert..."></textarea>
                 </div>
             </div>
@@ -547,7 +547,7 @@ textarea { min-height: 120px; resize: vertical; }
             </div>
 
             <div id="magicSection" class="field full" style="display: none; margin-top: 15px;">
-                <label>Elementarmagie & Schulen <span style="color:#6bb0ff;">(max. 2 auswählbar)</span>:</label>
+                <label>Elementarmagie & Schulen <span style="color:#c084fc;">(max. 2 auswählbar)</span>:</label>
                 <div class="checkbox-group" id="magicCheckboxGroup">
                     <label class="checkbox-item"><input type="checkbox" value="Feuer" class="magic-check" onchange="limitMagicSelection(this)"> 🔥 Feuer</label>
                     <label class="checkbox-item"><input type="checkbox" value="Wasser" class="magic-check" onchange="limitMagicSelection(this)"> 💧 Wasser</label>
@@ -669,7 +669,7 @@ textarea { min-height: 120px; resize: vertical; }
 
                 <!-- AUSSEHEN -->
                 <div class="field full" style="background: rgba(43, 22, 69, 0.4); padding: 15px; border-radius: 10px; border: 1px solid #2a2a32;">
-                    <label style="color: #8eb8e8; margin-bottom: 10px; display: block;">👁️ Aussehen & äußere Merkmale</label>
+                    <label style="color: #c084fc; margin-bottom: 10px; display: block;">👁️ Aussehen & äußere Merkmale</label>
                     <div class="grid" style="margin-bottom: 12px;">
                         <div class="field">
                             <label style="font-size: 13px;">Haarfarbe / Frisur</label>
@@ -708,7 +708,7 @@ textarea { min-height: 120px; resize: vertical; }
 
                 <!-- OOC -->
                 <div class="field full" style="background: #121216; padding: 15px; border-radius: 10px; border: 1px solid #2a2a32; margin-top: 10px;">
-                    <label style="color: #8eb8e8; margin-bottom: 5px; display: block;">🔒 OOC-Sicherheitsinfos (Reale Spieler-Informationen)</label>
+                    <label style="color: #c084fc; margin-bottom: 5px; display: block;">🔒 OOC-Sicherheitsinfos (Reale Spieler-Informationen)</label>
                     <p style="font-size: 13px; color: #aaa; margin-top: 0; margin-bottom: 12px;">Wichtige OOC-Hinweise für Mitspieler und Admins zum Schutz des realen Spielers.</p>
                     
                     <div style="margin-bottom: 12px;">
@@ -719,7 +719,7 @@ textarea { min-height: 120px; resize: vertical; }
                     </div>
 
                     <div style="margin-top: 15px;">
-                        <label style="font-size: 14px; color: #b8cce0; margin-bottom: 5px; display: block;">OOC-Phobien / Reale Grenzen (wichtig für Mitspieler):</label>
+                        <label style="font-size: 14px; color: #e4cfff; margin-bottom: 5px; display: block;">OOC-Phobien / Reale Grenzen (wichtig für Mitspieler):</label>
                         <textarea id="phobias" style="min-height: 70px;" placeholder="Trage hier reale Phobien oder Grenzen ein (z.B. bestimmte Ängste, Themen, die im RP vermieden werden sollen)..."></textarea>
                     </div>
                 </div>
@@ -829,7 +829,7 @@ textarea { min-height: 120px; resize: vertical; }
         <div class="modal-header">⚠️ Sind Sie sicher mit der Größe?</div>
         <div class="modal-body">
             <p>Deine eingetragene Größe weicht von der typischen Rassen-Vorgabe ab oder liegt außerhalb des üblichen Bereichs für dieses Geschlecht.</p>
-            <p id="sizeComparisonText" style="color: #8eb8e8; font-weight: bold;"></p>
+            <p id="sizeComparisonText" style="color: #c084fc; font-weight: bold;"></p>
             <div style="margin-top: 20px; background: #141418; padding: 15px; border-radius: 10px; border: 1px solid #2a2a32;">
                 <div class="field" style="margin-bottom: 12px;">
                     <label>Dein Username zur Bestätigung:</label>
@@ -858,7 +858,7 @@ textarea { min-height: 120px; resize: vertical; }
         <div class="modal-header">🔒 OOC-Bestätigung: Fesseln & Versklavung</div>
         <div class="modal-body">
             <p>Du möchtest bestätigen, dass <strong>Fesseln & Versklavung im RP</strong> für deinen Charakter in Ordnung sind.</p>
-            <p style="color: #8eb8e8;">Diese Information erscheint auf dem Charakterbogen und dient dem Schutz aller Beteiligten.</p>
+            <p style="color: #c084fc;">Diese Information erscheint auf dem Charakterbogen und dient dem Schutz aller Beteiligten.</p>
             <div style="margin-top: 20px; background: #141418; padding: 15px; border-radius: 10px; border: 1px solid #2a2a32;">
                 <div class="field" style="margin-bottom: 12px;">
                     <label>Dein Username (Ingame / Discord):</label>
@@ -938,10 +938,10 @@ textarea { min-height: 120px; resize: vertical; }
             <!-- Hintergrund, Ziele, Eigenschaften -->
             <div class="img-box full-width">
                 <div class="img-box-title">📜 Hintergrund, Ziele & Eigenschaften</div>
-                <div class="img-text-content" style="margin-bottom: 10px;"><strong style="color:#6bb0ff;">Hintergrund:</strong><br><span id="imgBackground">-</span></div>
-                <div class="img-text-content" style="margin-bottom: 10px;"><strong style="color:#6bb0ff;">Ziele & Vorhaben:</strong><br><span id="imgGoals">-</span></div>
-                <div class="img-text-content" style="margin-bottom: 10px;"><strong style="color:#6bb0ff;">Fähigkeiten:</strong><br><span id="imgAbilities">-</span></div>
-                <div class="img-text-content"><strong style="color:#6bb0ff;">Eigenschaften:</strong><br><span id="imgTraits">-</span></div>
+                <div class="img-text-content" style="margin-bottom: 10px;"><strong style="color:#c084fc;">Hintergrund:</strong><br><span id="imgBackground">-</span></div>
+                <div class="img-text-content" style="margin-bottom: 10px;"><strong style="color:#c084fc;">Ziele & Vorhaben:</strong><br><span id="imgGoals">-</span></div>
+                <div class="img-text-content" style="margin-bottom: 10px;"><strong style="color:#c084fc;">Fähigkeiten:</strong><br><span id="imgAbilities">-</span></div>
+                <div class="img-text-content"><strong style="color:#c084fc;">Eigenschaften:</strong><br><span id="imgTraits">-</span></div>
             </div>
 
             <!-- OOC -->
@@ -951,7 +951,7 @@ textarea { min-height: 120px; resize: vertical; }
                     <span class="img-status-badge">✓ Fesseln & Versklavung akzeptiert von: <span id="imgConsentUser"></span></span>
                 </div>
                 <div id="imgPhobiasWrapper" style="display:none;">
-                    <div class="img-text-content"><strong style="color:#6bb0ff;">OOC-Phobien / Grenzen:</strong><br><span id="imgPhobiasText">-</span></div>
+                    <div class="img-text-content"><strong style="color:#c084fc;">OOC-Phobien / Grenzen:</strong><br><span id="imgPhobiasText">-</span></div>
                 </div>
             </div>
         </div>
@@ -1838,7 +1838,7 @@ window.onload = () => {
 };
 </script>
 
-<footer style="text-align:center;padding:1.5rem;border-top:1px solid #2a2a32;color:#6a8aaa;font-size:0.85rem;margin-top:40px;">
+<footer style="text-align:center;padding:1.5rem;border-top:1px solid #2a2a32;color:#a89cc8;font-size:0.85rem;margin-top:40px;">
   <p>© Kiyasha</p>
 </footer>
 
